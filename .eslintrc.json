@@ -1,0 +1,36 @@
+{
+  "overrides": [
+    {
+      "extends": ["plugin:@typescript-eslint/recommended-requiring-type-checking"],
+      "files": ["*.ts", "*.tsx", "*.json"],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      }
+    }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "simple-import-sort"],
+  "extends": [
+    "plugin:@tanstack/eslint-plugin-query/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "rules": {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": false
+      }
+    ],
+    "@typescript-eslint/no-non-null-assertion": "on",
+    "@typescript-eslint/no-unsafe-member-access": "on",
+    "@typescript-eslint/no-unsafe-call": "on"
+  }
+}
