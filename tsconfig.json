@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     /* Basic Options */
-    "target": "es2018",
+    "target": "ESNext",
     "module": "esNext",
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom", "DOM.Iterable"],
     "allowJs": true,
     "checkJs": false,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "noEmit": true,
 
@@ -20,6 +20,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": false,
+    "skipLibCheck": true,
 
     /* Module Resolution Options */
     "baseUrl": ".",
