@@ -1,4 +1,5 @@
 import { createClient } from "grubba-rpc";
-import { Server } from "/server/main";
 
-export const api = createClient<Server>()
+import type { Server } from "/server/main";
+
+export const api = createClient<Server>();
