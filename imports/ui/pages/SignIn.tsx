@@ -25,20 +25,16 @@ export const SignIn = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleError = (error: Meteor.Error | undefined) => {
-    if (error) {
-      const reason = error?.reason || "Sorry, please try again.";
-      setErrorMessage(reason);
-      return;
-    }
-    reset();
-    navigate(ROUTES.DASHBOARD);
-  };
-
   const onSubmit = ({ email, password }: AuthValues) => {
     setErrorMessage(null);
     Meteor.loginWithPassword(email, password, (error) => {
-      handleError(error);
+      if (error) {
+        const message = error?.message || "Sorry, please try again.";
+        setErrorMessage(message);
+        return;
+      }
+      reset();
+      navigate(ROUTES.DASHBOARD);
     });
   };
 
