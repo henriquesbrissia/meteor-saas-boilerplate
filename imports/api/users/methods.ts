@@ -9,9 +9,9 @@ export const usersModule = createModule("users")
     const users = await UsersCollection.find().fetchAsync();
     return users;
   })
-  .addMethod("updateProfile", profileSchema, async ({ name, email, userId }) => {
+  .addMethod("updateProfile", profileSchema, async ({ name, email, userId, image }) => {
     await UsersCollection.updateAsync(userId, {
-      $set: { profile: { name }, "emails.0.address": email }
+      $set: { profile: { name, image }, "emails.0.address": email }
     });
   })
   .addMethod("loggedUser", userSchema, async () => {

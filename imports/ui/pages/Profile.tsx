@@ -1,25 +1,28 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
+import type { ProfileValues } from "/imports/api/users/schemas";
 import { profileSchema } from "/imports/api/users/schemas";
 
 import { api } from "../api";
 import { ROUTES } from "../utils/routes";
-
-type ProfileValues = Zod.infer<typeof profileSchema>;
 
 export const Profile = () => {
   const { data: user } = api.users.loggedUser.useQuery();
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isSubmitting }
   } = useForm<ProfileValues>({
     defaultValues: {
       userId: user?._id,
       name: user?.profile?.name || "",
-      email: user?.emails[0].address || ""
+      email: user?.emails[0].address || "",
+      image: user?.profile?.image || ""
     },
     resolver: zodResolver(profileSchema)
   });
@@ -37,10 +40,34 @@ export const Profile = () => {
     });
   };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setValue("image", reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const profilePicture = watch("image");
+
   return (
     <div>
       <h1>Profile</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+        {profilePicture && (
+          <div>
+            <img
+              src={profilePicture}
+              alt="Profile Picture"
+              style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "50%" }}
+            />
+          </div>
+        )}
+        {errors.image && <span>{errors.image.message}</span>}
         <label>Name:</label>
         <input type="text" {...register("name")} />
         {errors.name && <span>{errors.name.message}</span>}
