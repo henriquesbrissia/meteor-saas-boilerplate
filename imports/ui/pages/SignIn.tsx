@@ -3,13 +3,10 @@ import { Meteor } from "meteor/meteor";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import type { z } from "zod";
 
-import { authSignUpSchema } from "/imports/api/auth/schemas";
+import { type AuthValues, signInSchema } from "/imports/api/auth/schemas";
 
 import { ROUTES } from "../utils/routes";
-
-type AuthValues = z.infer<typeof authSignUpSchema>;
 
 export const SignIn = () => {
   const {
@@ -19,7 +16,7 @@ export const SignIn = () => {
     formState: { errors, isSubmitting }
   } = useForm<AuthValues>({
     defaultValues: { email: "", password: "" },
-    resolver: zodResolver(authSignUpSchema)
+    resolver: zodResolver(signInSchema)
   });
 
   const navigate = useNavigate();

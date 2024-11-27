@@ -1,23 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { z } from "zod";
+
+import { type CreateUserValues, signUpSchema } from "/imports/api/auth/schemas";
 
 import { api } from "../api";
 import { ROUTES } from "../utils/routes";
-
-const signUpSchema = z
-  .object({
-    email: z.string().email(),
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8)
-  })
-  .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: "password doesn't match",
-    path: ["confirmPassword"]
-  });
-
-type AuthValues = Zod.infer<typeof signUpSchema>;
 
 export const SignUp = () => {
   const {
@@ -25,7 +13,7 @@ export const SignUp = () => {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm<AuthValues>({
+  } = useForm<CreateUserValues>({
     defaultValues: { email: "", password: "", confirmPassword: "" },
     resolver: zodResolver(signUpSchema)
   });
@@ -33,7 +21,7 @@ export const SignUp = () => {
 
   const signUp = api.auth.signUp.useMutation();
 
-  const onSubmit = async ({ email, password }: AuthValues) => {
+  const onSubmit = async ({ email, password }: CreateUserValues) => {
     await signUp.mutateAsync(
       { email, password },
       {
