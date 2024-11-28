@@ -9,7 +9,7 @@ import { SignIn } from "/imports/ui/pages/SignIn";
 import { SignUp } from "/imports/ui/pages/SignUp";
 import { ROUTES } from "/imports/ui/utils/routes";
 
-import { ProtectedRoutes } from "../imports/ui/utils/ProtectedRoutes";
+import { ProtectedRoutes } from "../imports/ui/components/ProtectedRoutes";
 
 const queryClient = new QueryClient();
 
