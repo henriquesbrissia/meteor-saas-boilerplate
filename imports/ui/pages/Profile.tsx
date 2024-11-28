@@ -1,12 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Meteor } from "meteor/meteor";
 import type { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import type { ProfileValues } from "/imports/api/users/schemas";
 import { profileSchema } from "/imports/api/users/schemas";
 
 import { api } from "../api";
+import { PasswordUpdate } from "../components/PasswordUpdate";
 import { ROUTES } from "../utils/routes";
 
 export const Profile = () => {
@@ -35,17 +37,17 @@ export const Profile = () => {
     resolver: zodResolver(profileSchema)
   });
 
-  const updateProfile = api.users.updateProfile.useMutation();
+  const updateProfile = api.users.updateProfile.useMutation({
+    onError: (e) => {
+      alert(e.message);
+    },
+    onSuccess: () => {
+      alert("Update successfull");
+    }
+  });
 
   const onSubmit = async (data: ProfileValues) => {
-    await updateProfile.mutateAsync(data, {
-      onError: (e) => {
-        alert(e.message);
-      },
-      onSuccess: () => {
-        alert("Update successfull");
-      }
-    });
+    await updateProfile.mutateAsync(data);
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,32 +63,45 @@ export const Profile = () => {
 
   const profilePicture = watch("image");
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    Meteor.logout();
+    navigate(ROUTES.SIGN_IN);
+  };
+
   return (
     <div>
       <h1>Profile</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
         {profilePicture && (
           <div>
             <img
               src={profilePicture}
               alt="Profile Picture"
-              style={{ width: "150px", height: "150px", objectFit: "cover", borderRadius: "50%" }}
+              style={{ width: "150px", height: "150px", borderRadius: "50%" }}
             />
           </div>
         )}
+        <input type="file" accept="image/*" onChange={handleFileChange} />
         {errors.image && <span>{errors.image.message}</span>}
+        <h2>Your info:</h2>
         <label>Name:</label>
         <input type="text" {...register("name")} />
         {errors.name && <span>{errors.name.message}</span>}
+        <br />
         <label>Email:</label>
         <input type="email" {...register("email")} />
         {errors.email && <span>{errors.email.message}</span>}
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Saving..." : "Save"}
+        <br />
+        <button style={{ marginTop: "15px" }} type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Saving..." : "Save changes"}
         </button>
-        <Link to={ROUTES.DASHBOARD}>Back to Dashboard</Link>
       </form>
+      <PasswordUpdate />
+      <button style={{ marginTop: "20px" }} onClick={handleClick}>
+        Logout
+      </button>
     </div>
   );
 };
