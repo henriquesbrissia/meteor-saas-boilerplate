@@ -27,9 +27,11 @@ export const SignUp = () => {
       { email, password },
       {
         onSuccess: () => {
+          Meteor.loginWithPassword(email, password);
           reset();
-          navigate(ROUTES.SIGN_IN);
-        }
+          navigate(ROUTES.DASHBOARD);
+        },
+        onError: (e) => alert(e.message)
       }
     );
   };
