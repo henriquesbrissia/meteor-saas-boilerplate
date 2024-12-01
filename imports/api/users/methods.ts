@@ -2,7 +2,7 @@ import { createModule } from "grubba-rpc";
 import { Meteor } from "meteor/meteor";
 
 import { UsersCollection } from "./collection";
-import { profileSchema, userSchema, usersFindAllSchema } from "./schemas";
+import { deleteSchema, profileSchema, userSchema, usersFindAllSchema } from "./schemas";
 
 export const usersModule = createModule("users")
   .addMethod("findAll", usersFindAllSchema, async () => {
@@ -21,5 +21,12 @@ export const usersModule = createModule("users")
     }
     const user = await UsersCollection.findOneAsync({ _id: userId });
     return user;
+  })
+  .addMethod("deleteAccount", deleteSchema, async () => {
+    const userId = Meteor.userId();
+    if (!userId) {
+      throw new Meteor.Error("Not authorized");
+    }
+    await UsersCollection.removeAsync(userId);
   })
   .buildSubmodule();

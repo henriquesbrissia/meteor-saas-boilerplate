@@ -38,15 +38,11 @@ export const Profile = () => {
   });
 
   const updateProfile = api.users.updateProfile.useMutation({
-    onError: (e) => {
-      alert(e.message);
-    },
-    onSuccess: () => {
-      alert("Update successfull");
-    }
+    onError: (e) => alert(e.message),
+    onSuccess: () => alert("Update successful!")
   });
 
-  const onSubmit = async (data: ProfileValues) => {
+  const handleUpdateProfile = async (data: ProfileValues) => {
     await updateProfile.mutateAsync(data);
   };
 
@@ -54,26 +50,43 @@ export const Profile = () => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        setValue("image", reader.result as string);
-      };
+      reader.onload = () => setValue("image", reader.result as string);
       reader.readAsDataURL(file);
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    Meteor.logout();
+    navigate(ROUTES.SIGN_IN);
+  };
+
+  const deleteAccount = api.users.deleteAccount.useMutation({
+    onError: (e) => alert(e.message),
+    onSuccess: () => {
+      alert("Account deleted successfully.");
+      handleLogout();
+    }
+  });
+
+  const userId = watch("userId");
+
+  const handleDeleteAccount = async () => {
+    const confirmDelete = confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
+    if (confirmDelete) {
+      await deleteAccount.mutateAsync(userId);
     }
   };
 
   const profilePicture = watch("image");
 
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    Meteor.logout();
-    navigate(ROUTES.SIGN_IN);
-  };
-
   return (
     <div>
       <h1>Profile</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleUpdateProfile)}>
         {profilePicture && (
           <div>
             <img
@@ -99,8 +112,12 @@ export const Profile = () => {
         </button>
       </form>
       <PasswordUpdate />
-      <button style={{ marginTop: "20px" }} onClick={handleClick}>
+      <button style={{ marginTop: "20px" }} onClick={handleLogout}>
         Logout
+      </button>
+      <br />
+      <button onClick={handleDeleteAccount} style={{ marginTop: "20px", color: "red" }}>
+        Delete Account
       </button>
     </div>
   );

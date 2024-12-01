@@ -5,7 +5,7 @@ export const usersSchema = z.object({
   username: z.string().optional(),
   emails: z.array(z.object({ address: z.string().email(), verified: z.boolean() })),
   createdAt: z.date().optional(),
-  profile: z.object({ name: z.string(), image: z.string() }),
+  profile: z.object({ name: z.string(), image: z.string().optional() }),
   services: z
     .object({
       google: z.object({
@@ -57,6 +57,8 @@ export const profileSchema = z.object({
 export type ProfileValues = Zod.infer<typeof profileSchema>;
 
 export const userSchema = z.undefined();
+
+export const deleteSchema = z.string();
 
 export const passwordSchema = z
   .object({
