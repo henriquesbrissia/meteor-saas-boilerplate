@@ -6,10 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 import type { ProfileValues } from "/imports/api/users/schemas";
 import { profileSchema } from "/imports/api/users/schemas";
+import { ROUTES } from "/imports/ui/utils/routes";
 
 import { api } from "../api";
+import { Button } from "../components/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../components/form";
+import { Input } from "../components/input";
 import { PasswordUpdate } from "../components/PasswordUpdate";
-import { ROUTES } from "../utils/routes";
 
 export const Profile = () => {
   const { data: user } = api.users.loggedUser.useQuery();
@@ -18,7 +21,7 @@ export const Profile = () => {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isSubmitting }
+    formState: { isSubmitting }
   } = useForm<ProfileValues>({
     defaultValues: {
       userId: user?._id,
@@ -83,42 +86,84 @@ export const Profile = () => {
 
   const profilePicture = watch("image");
 
+  const form = useForm();
+
   return (
-    <div>
-      <h1>Profile</h1>
-      <form onSubmit={handleSubmit(handleUpdateProfile)}>
-        {profilePicture && (
-          <div>
-            <img
-              src={profilePicture}
-              alt="Profile Picture"
-              style={{ width: "150px", height: "150px", borderRadius: "50%" }}
+    <div className="grid gap-4 grid-cols-2 grid-rows-4 max-w-4xl mx-auto p-8">
+      <div className="bg-white p-8 rounded-md shadow-sm">
+        <h1 className="text-2xl font-bold mb-4">Your Account</h1>
+        <p className="text-sm text-gray-500">Update your account's name and email address.</p>
+      </div>
+      <div className="bg-slate-100 p-8 rounded-md shadow-md">
+        <Form {...form}>
+          <form onSubmit={handleSubmit(handleUpdateProfile)} className="space-y-6">
+            <div className="flex items-center gap-4">
+              {profilePicture ? (
+                <img
+                  src={profilePicture}
+                  alt="Profile"
+                  className="w-32 h-32 rounded-full bg-gray-200 border"
+                />
+              ) : (
+                <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-400">
+                  H
+                </div>
+              )}
+              <Button variant="outline">
+                <label htmlFor="profileImage" className="cursor-pointer">
+                  Select a new photo
+                </label>
+              </Button>
+              <input
+                id="profileImage"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input id="name" type="text" {...field} {...register("name")} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-        )}
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        {errors.image && <span>{errors.image.message}</span>}
-        <h2>Your info:</h2>
-        <label>Name:</label>
-        <input type="text" {...register("name")} />
-        {errors.name && <span>{errors.name.message}</span>}
-        <br />
-        <label>Email:</label>
-        <input type="email" {...register("email")} />
-        {errors.email && <span>{errors.email.message}</span>}
-        <br />
-        <button style={{ marginTop: "15px" }} type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Saving..." : "Save changes"}
-        </button>
-      </form>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input id="email" type="email" {...field} {...register("email")} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-24">
+              {isSubmitting ? "Saving..." : "Save"}
+            </Button>
+          </form>
+        </Form>
+      </div>
       <PasswordUpdate />
-      <button style={{ marginTop: "20px" }} onClick={handleLogout}>
-        Logout
-      </button>
-      <br />
-      <button onClick={handleDeleteAccount} style={{ marginTop: "20px", color: "red" }}>
-        Delete Account
-      </button>
+      <div></div>
+      <div className="space-y-4 px-6">
+        <Button variant="outline" onClick={handleLogout} className="w-full shadow-md">
+          Logout
+        </Button>
+        <Button variant="destructive" onClick={handleDeleteAccount} className="w-full shadow-md">
+          Delete Account
+        </Button>
+      </div>
     </div>
   );
 };
