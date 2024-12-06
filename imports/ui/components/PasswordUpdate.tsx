@@ -5,11 +5,15 @@ import { useForm } from "react-hook-form";
 import type { PasswordValues } from "/imports/api/users/schemas";
 import { passwordSchema } from "/imports/api/users/schemas";
 
+import { Button } from "./button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./form";
+import { Input } from "./input";
+
 export const PasswordUpdate = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     reset
   } = useForm<PasswordValues>({
     defaultValues: {
@@ -31,29 +35,79 @@ export const PasswordUpdate = () => {
     });
   };
 
+  const form = useForm();
+
   return (
-    <div>
-      <h2>Update Password</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label htmlFor="oldPassword">Old Password:</label>
-          <input id="oldPassword" type="password" {...register("oldPassword")} />
-          {errors.oldPassword && <span>{errors.oldPassword.message}</span>}
-        </div>
-        <div>
-          <label htmlFor="newPassword">New Password:</label>
-          <input id="newPassword" type="password" {...register("newPassword")} />
-          {errors.newPassword && <span>{errors.newPassword.message}</span>}
-        </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirm New Password:</label>
-          <input id="confirmPassword" type="password" {...register("confirmPassword")} />
-          {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
-        </div>
-        <button style={{ marginTop: "10px" }} type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Updating..." : "Update"}
-        </button>
-      </form>
-    </div>
+    <>
+      <div className="bg-slate-100 p-8 rounded-md shadow-md">
+        <h1 className="text-2xl font-bold mb-4">Change password</h1>
+        <p className="text-sm text-gray-500">
+          Ensure your account is using a long, random password to stay secure.
+        </p>
+      </div>
+      <div className="bg-white p-8 rounded-md shadow-sm">
+        <Form {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="oldPasssword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Old Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="oldPassword"
+                      type="password"
+                      {...field}
+                      {...register("oldPassword")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="newPasssword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>New Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="newPassword"
+                      type="password"
+                      {...field}
+                      {...register("newPassword")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPasssword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="confirmPassword"
+                      type="password"
+                      {...field}
+                      {...register("confirmPassword")}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-24 m-auto">
+              {isSubmitting ? "Saving..." : "Save"}
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 };

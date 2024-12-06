@@ -1,12 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Github } from "lucide-react";
 import { Meteor } from "meteor/meteor";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
 import { type CreateUserValues, signUpSchema } from "/imports/api/auth/schemas";
+import { api } from "/imports/ui/api";
+import { ROUTES } from "/imports/ui/utils/routes";
 
-import { api } from "../api";
-import { ROUTES } from "../utils/routes";
+import { Button } from "../components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/card";
+import { Input } from "../components/input";
+import { Label } from "../components/label";
 
 export const SignUp = () => {
   const {
@@ -60,40 +65,75 @@ export const SignUp = () => {
   };
 
   return (
-    <>
-      <div>
-        <h1>Create Account</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label>Email:</label>
-            <input type="email" placeholder="you@henrique.dev" {...register("email")} />
-            {errors.email && <span>{errors.email.message}</span>}
-          </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" placeholder="Your Password" {...register("password")} />
-            {errors.password && <span>{errors.password.message}</span>}
-            <input
-              type="password"
-              placeholder="Confirm your Password"
-              {...register("confirmPassword")}
-            />
-            {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
-          </div>
-          <div>
-            <button type="submit" disabled={signUp.isPending}>
+    <div className="flex h-screen w-full items-center justify-center">
+      <Card className="px-8 space-y-6 shadow-md">
+        <CardHeader>
+          <CardTitle className="text-4xl my-4 text-center">Sign up</CardTitle>
+          <CardDescription className="text-center">
+            Enter your email below to create your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+                {...register("email")}
+                aria-invalid={!!errors.email}
+              />
+              {errors.email && <span>{errors.email.message}</span>}
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                required
+                placeholder="Your password"
+                {...register("password")}
+                aria-invalid={!!errors.password}
+              />
+              {errors.password && <span>{errors.password.message}</span>}
+              <Input
+                id="confirmPassword"
+                type="password"
+                required
+                placeholder="Confirm your password"
+                {...register("confirmPassword")}
+                aria-invalid={!!errors.confirmPassword}
+              />
+              {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}
+            </div>
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              type="submit"
+              disabled={signUp.isPending}
+              className="w-full"
+            >
               {signUp.isPending ? "Signing up..." : "Sign up"}
-            </button>
-            {signUp.isError && <p>Error: {signUp.error.message}</p>}
+            </Button>
+            <div className="flex my-6 gap-5">
+              <Button onClick={googleAuth} variant="outline" className="w-full">
+                <span className="font-bold text-lg">G</span> Google
+              </Button>
+              <Button onClick={githubAuth} variant="outline" className="w-full">
+                <Github /> Github
+              </Button>
+            </div>
           </div>
-        </form>
-        <button onClick={googleAuth}>Sign up with Google</button>
-        <button onClick={githubAuth}>Sign up with GitHub</button>
-        <br />
-        <Link to={ROUTES.SIGN_IN} className="back">
-          ⭠ back to sign in page
-        </Link>
-      </div>
-    </>
+          <div className="mt-4 text-left text-sm">
+            <Link to={ROUTES.SIGN_IN} className="underline">
+              ⭠ back to sign in page
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
