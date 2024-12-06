@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Meteor } from "meteor/meteor";
 import type { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 import type { ProfileValues } from "/imports/api/users/schemas";
 import { profileSchema } from "/imports/api/users/schemas";
@@ -58,11 +57,9 @@ export const Profile = () => {
     }
   };
 
-  const navigate = useNavigate();
-
   const handleLogout = () => {
     Meteor.logout();
-    navigate(ROUTES.SIGN_IN);
+    location.href = ROUTES.SIGN_IN;
   };
 
   const deleteAccount = api.users.deleteAccount.useMutation({
