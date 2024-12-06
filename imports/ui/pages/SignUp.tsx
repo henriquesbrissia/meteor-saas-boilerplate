@@ -66,9 +66,9 @@ export const SignUp = () => {
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
-      <Card className="px-8 space-y-6 shadow-md">
+      <Card className="px-8 space-y-6 shadow-lg w-[28rem]">
         <CardHeader>
-          <CardTitle className="text-4xl my-4 text-center">Sign up</CardTitle>
+          <CardTitle className="text-3xl mb-5 mt-2 text-center">Sign up</CardTitle>
           <CardDescription className="text-center">
             Enter your email below to create your account
           </CardDescription>
@@ -118,7 +118,12 @@ export const SignUp = () => {
             >
               {signUp.isPending ? "Signing up..." : "Sign up"}
             </Button>
-            <div className="flex my-6 gap-5">
+            <div className="relative flex items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink m-4 text-gray-400 text-xs">or sign up with</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex mb-6 gap-5">
               <Button onClick={googleAuth} variant="outline" className="w-full">
                 <span className="font-bold text-lg">G</span> Google
               </Button>
@@ -128,7 +133,7 @@ export const SignUp = () => {
             </div>
           </div>
           <div className="mt-4 text-left text-sm">
-            <Link to={ROUTES.SIGN_IN} className="underline">
+            <Link to={ROUTES.SIGN_IN} className="underline text-gray-500">
               ⭠ back to sign in page
             </Link>
           </div>
