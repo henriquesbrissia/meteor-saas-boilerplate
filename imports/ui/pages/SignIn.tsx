@@ -65,9 +65,9 @@ export const SignIn = () => {
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
-      <Card className="px-8 space-y-6 shadow-md">
+      <Card className="px-8 space-y-4 shadow-lg w-[28rem]">
         <CardHeader>
-          <CardTitle className="text-4xl my-4 text-center">Sign in</CardTitle>
+          <CardTitle className="text-3xl mb-5 mt-2 text-center">Sign in</CardTitle>
           <CardDescription className="text-center">
             Enter your email below to login to your account
           </CardDescription>
@@ -91,7 +91,7 @@ export const SignIn = () => {
                 <Label htmlFor="password">Password</Label>
                 <Link
                   to={ROUTES.FORGOT_PASSWORD}
-                  className="ml-auto inline-block text-sm underline"
+                  className="ml-auto inline-block text-sm underline text-gray-500"
                 >
                   Forgot your password?
                 </Link>
@@ -119,7 +119,12 @@ export const SignIn = () => {
                 Error: {errorMessage}
               </p>
             )}
-            <div className="flex my-6 gap-5">
+            <div className="relative flex items-center">
+              <div className="flex-grow border-t border-gray-400"></div>
+              <span className="flex-shrink m-4 text-gray-400 text-xs">or sign in with</span>
+              <div className="flex-grow border-t border-gray-400"></div>
+            </div>
+            <div className="flex mb-6 gap-5">
               <Button onClick={googleAuth} variant="outline" className="w-full">
                 <span className="font-bold text-lg">G</span> Google
               </Button>
@@ -128,8 +133,8 @@ export const SignIn = () => {
               </Button>
             </div>
           </div>
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
+          <div className="mt-4 text-center text-sm text-gray-500">
+            Don't have an account yet?{" "}
             <Link to={ROUTES.SIGN_UP} className="underline">
               Sign up
             </Link>
