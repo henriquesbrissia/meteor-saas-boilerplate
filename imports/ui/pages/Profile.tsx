@@ -154,7 +154,7 @@ export const Profile = () => {
           </form>
         </Form>
       </div>
-      <PasswordUpdate />
+      {user?.services?.password && <PasswordUpdate />}
       <div></div>
       <div className="space-y-4 px-6">
         <Button variant="outline" onClick={handleLogout} className="w-full shadow-md">
