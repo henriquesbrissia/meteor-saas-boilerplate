@@ -8,6 +8,9 @@ export const usersSchema = z.object({
   profile: z.object({ name: z.string(), image: z.string().optional() }),
   services: z
     .object({
+      password: z.object({
+        bcrypt: z.string()
+      }),
       google: z.object({
         accessToken: z.string(),
         email: z.string().email(),
