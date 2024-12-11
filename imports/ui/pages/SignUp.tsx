@@ -66,9 +66,9 @@ export const SignUp = () => {
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
-      <Card className="px-8 space-y-6 shadow-lg w-[28rem]">
+      <Card className="px-8 space-y-4 shadow-lg w-[28rem]">
         <CardHeader>
-          <CardTitle className="text-3xl mb-5 mt-2 text-center">Sign up</CardTitle>
+          <CardTitle className="text-3xl mb-3 mt-2 text-center">Sign up</CardTitle>
           <CardDescription className="text-center">
             Enter your email below to create your account
           </CardDescription>
