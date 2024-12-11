@@ -17,13 +17,7 @@ import { PasswordUpdate } from "../components/PasswordUpdate";
 
 export const Profile = () => {
   const { data: user } = api.users.loggedUser.useQuery();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    watch,
-    formState: { isSubmitting }
-  } = useForm<ProfileValues>({
+  const form = useForm<ProfileValues>({
     defaultValues: {
       userId: user?._id,
       name: user?.profile?.name || "",
@@ -46,7 +40,7 @@ export const Profile = () => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => setValue("image", reader.result as string);
+      reader.onload = () => form.setValue("image", reader.result as string);
       reader.readAsDataURL(file);
     }
   };
@@ -68,7 +62,7 @@ export const Profile = () => {
     }
   });
 
-  const userId = watch("userId");
+  const userId = form.watch("userId");
 
   const handleDeleteAccount = async () => {
     const confirmDelete = confirm(
@@ -79,9 +73,7 @@ export const Profile = () => {
     }
   };
 
-  const profilePicture = watch("image");
-
-  const form = useForm();
+  const profilePicture = form.watch("image");
 
   return (
     <div className="grid gap-4 grid-cols-2 grid-rows-4 max-w-4xl mx-auto p-8">
@@ -91,7 +83,7 @@ export const Profile = () => {
       </div>
       <div className="bg-slate-100 p-8 rounded-md shadow-md">
         <Form {...form}>
-          <form onSubmit={handleSubmit(handleUpdateProfile)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(handleUpdateProfile)} className="space-y-6">
             <div className="flex items-center gap-4">
               {profilePicture ? (
                 <img
@@ -100,8 +92,9 @@ export const Profile = () => {
                   className="w-32 h-32 rounded-full bg-gray-200 border"
                 />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-400">
-                  H
+                <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center text-gray-400 text-3xl">
+                  {user?.profile?.name.charAt(0) ||
+                    user?.emails?.[0].address.charAt(0).toUpperCase()}
                 </div>
               )}
               <Button variant="outline">
@@ -124,7 +117,7 @@ export const Profile = () => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input id="name" type="text" {...field} {...register("name")} />
+                    <Input id="name" type="text" {...field} {...form.register("name")} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -137,14 +130,14 @@ export const Profile = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input id="email" type="email" {...field} {...register("email")} />
+                    <Input id="email" type="email" {...field} {...form.register("email")} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" className="w-24">
-              {isSubmitting ? "Saving..." : "Save"}
+              {form.formState.isSubmitting ? "Saving..." : "Save"}
             </Button>
           </form>
         </Form>
