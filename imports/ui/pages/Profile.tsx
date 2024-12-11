@@ -25,16 +25,8 @@ export const Profile = () => {
     defaultValues: {
       userId: user?._id,
       name: user?.profile?.name || "",
-      email:
-        user?.services?.github?.email ||
-        user?.services?.google?.email ||
-        user?.emails[0].address ||
-        "",
-      image:
-        user?.services?.github?.avatar ||
-        user?.services?.google?.picture ||
-        user?.profile?.image ||
-        ""
+      email: user?.githubMail || user?.googleMail || user?.emails?.[0].address || "",
+      image: user?.githubImage || user?.googleImage || user?.profile?.image || ""
     },
     resolver: zodResolver(profileSchema)
   });
@@ -151,7 +143,7 @@ export const Profile = () => {
           </form>
         </Form>
       </div>
-      {user?.services?.password && <PasswordUpdate />}
+      {user?.hasPassword && <PasswordUpdate />}
       <div></div>
       <div className="space-y-4 px-6">
         <Button variant="outline" onClick={handleLogout} className="w-full shadow-md">
