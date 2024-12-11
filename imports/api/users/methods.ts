@@ -20,7 +20,16 @@ export const usersModule = createModule("users")
       throw new Meteor.Error("Not authorized");
     }
     const user = await UsersCollection.findOneAsync({ _id: userId });
-    return user;
+    return {
+      _id: user?._id,
+      hasPassword: !!user?.services?.password,
+      profile: user?.profile,
+      emails: user?.emails,
+      githubMail: user?.services?.github?.email,
+      googleMail: user?.services?.google?.email,
+      githubImage: user?.services?.github?.avatar,
+      googleImage: user?.services?.google?.picture
+    };
   })
   .addMethod("deleteAccount", deleteSchema, async () => {
     const userId = Meteor.userId();
