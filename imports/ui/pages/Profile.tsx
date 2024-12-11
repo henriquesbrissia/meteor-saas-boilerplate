@@ -21,7 +21,7 @@ export const Profile = () => {
     defaultValues: {
       userId: user?._id,
       name: user?.profile?.name || "",
-      email: user?.githubMail || user?.googleMail || user?.emails?.[0].address || "",
+      email: user?.githubEmail || user?.googleEmail || user?.emails?.[0].address || "",
       image: user?.githubImage || user?.googleImage || user?.profile?.image || ""
     },
     resolver: zodResolver(profileSchema)
