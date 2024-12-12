@@ -8,10 +8,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { type AuthValues, signInSchema } from "/imports/api/auth/schemas";
 import { ROUTES } from "/imports/ui/utils/routes";
 
-import { Button } from "../components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/card";
-import { Input } from "../components/input";
-import { Label } from "../components/label";
+import { Button } from "../elements/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
+import { Input } from "../elements/input";
+import { Label } from "../elements/label";
 
 export const SignIn = () => {
   const {
