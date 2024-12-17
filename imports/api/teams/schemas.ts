@@ -18,4 +18,6 @@ export const addMemberSchema = z.object({
   userId: z.string()
 });
 
-export type Team = z.infer<typeof teamSchema>;
+export type CreateTeamValues = z.infer<typeof createTeamSchema>;
+
+export type TeamValues = z.infer<typeof teamSchema>;
