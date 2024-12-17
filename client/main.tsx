@@ -3,13 +3,13 @@ import { Meteor } from "meteor/meteor";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
+import { ProtectedRoutes } from "/imports/ui/components/ProtectedRoutes";
 import { Dashboard } from "/imports/ui/pages/Dashboard";
 import { Profile } from "/imports/ui/pages/Profile";
 import { SignIn } from "/imports/ui/pages/SignIn";
 import { SignUp } from "/imports/ui/pages/SignUp";
+import { Teams } from "/imports/ui/pages/Teams";
 import { ROUTES } from "/imports/ui/utils/routes";
-
-import { ProtectedRoutes } from "../imports/ui/components/ProtectedRoutes";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +26,7 @@ Meteor.startup(() => {
           <Route element={<ProtectedRoutes />}>
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />
+            <Route path={ROUTES.TEAMS} element={<Teams />} />
           </Route>
         </Routes>
       </BrowserRouter>
