@@ -14,8 +14,8 @@
     "components": "/imports/ui/components",
     "utils": "/imports/ui/utils",
     "ui": "/imports/ui/elements",
-    "lib": "/lib",
-    "hooks": "/hooks"
+    "lib": "/imports/ui/lib",
+    "hooks": "/imports/ui/hooks"
   },
   "iconLibrary": "lucide"
 }
