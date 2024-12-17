@@ -8,10 +8,10 @@ import { type CreateUserValues, signUpSchema } from "/imports/api/auth/schemas";
 import { api } from "/imports/ui/api";
 import { ROUTES } from "/imports/ui/utils/routes";
 
-import { Button } from "../components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/card";
-import { Input } from "../components/input";
-import { Label } from "../components/label";
+import { Button } from "../elements/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
+import { Input } from "../elements/input";
+import { Label } from "../elements/label";
 
 export const SignUp = () => {
   const {
