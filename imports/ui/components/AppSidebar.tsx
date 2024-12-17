@@ -26,7 +26,7 @@ const items = [
   },
   {
     title: "Teams",
-    url: "#",
+    url: ROUTES.TEAMS,
     icon: Users
   }
 ];
