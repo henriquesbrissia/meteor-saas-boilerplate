@@ -1,17 +1,10 @@
 import { z } from "zod";
 
-export const memberSchema = z.object({
-  _id: z.string(),
-  email: z.string().email().optional(),
-  name: z.string().optional(),
-  createdAt: z.union([z.date(), z.string()]).optional()
-});
-
 export const teamSchema = z.object({
   _id: z.string(),
   name: z.string(),
   ownerId: z.string(),
-  members: z.array(memberSchema),
+  members: z.array(z.object({ _id: z.string(), joinedAt: z.date() })),
   createdAt: z.union([z.date(), z.string()]).optional()
 });
 
