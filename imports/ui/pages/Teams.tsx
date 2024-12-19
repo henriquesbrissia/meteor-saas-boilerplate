@@ -1,49 +1,19 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
+import { Users } from "lucide-react";
 import { Meteor } from "meteor/meteor";
-import { useForm } from "react-hook-form";
-
-import type { CreateTeamValues } from "/imports/api/teams/schemas";
-import { createTeamSchema } from "/imports/api/teams/schemas";
 
 import { api } from "../api";
 import { AppSidebar } from "../components/AppSidebar";
-import { Button } from "../elements/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../elements/card";
-import { Form, FormControl, FormItem, FormLabel, FormMessage } from "../elements/form";
-import { Input } from "../elements/input";
+import { CreateTeamDialog } from "../components/CreateTeamDialog";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../elements/table";
 
 export const Teams = () => {
-  const form = useForm<CreateTeamValues>({
-    defaultValues: { name: "" },
-    resolver: zodResolver(createTeamSchema)
-  });
-
-  const queryClient = useQueryClient();
-
   const userId = Meteor.userId();
   if (!userId) return <p>You must be logged in to continue</p>;
 
   const { data: teams = [], isLoading } = api.teams.getUserTeams.useQuery({ _id: userId });
 
-  const createTeam = api.teams.createTeam.useMutation({
-    onError: (error) => console.error("Error creating team:", error),
-    onSuccess: async () => {
-      alert("Team created successfully!");
-      form.reset();
-      await queryClient.invalidateQueries();
-    }
-  });
-
-  const handleCreateTeam = async (data: CreateTeamValues) => {
-    try {
-      await createTeam.mutateAsync(data);
-    } catch (error) {
-      console.error("Error creating team:", error);
-    }
-  };
+  if (error) return <p>Error loading teams: {error.message}</p>;
 
   return (
     <SidebarProvider>
@@ -100,36 +70,10 @@ export const Teams = () => {
             ) : (
               <p className="text-gray-500">You have no teams yet.</p>
             )}
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl font-bold">Create New Team</CardTitle>
-          </CardHeader>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleCreateTeam)}>
-              <CardContent>
-                <FormItem>
-                  <FormLabel>Team name</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="teamName"
-                      type="text"
-                      placeholder="Enter team name"
-                      {...form.register("name")}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              </CardContent>
-              <CardFooter className="flex justify-end">
-                <Button type="submit" variant="default">
-                  Create Team
-                </Button>
-              </CardFooter>
-            </form>
-          </Form>
-        </Card>
+          <div className="flex justify-end mt-4">
+            <CreateTeamDialog />
+          </div>
+        </div>
       </div>
     </SidebarProvider>
   );
