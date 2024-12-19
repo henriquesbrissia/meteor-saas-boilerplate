@@ -26,7 +26,9 @@ export const usersModule = createModule("users")
       profile: user?.profile,
       emails: user?.emails,
       githubEmail: user?.services?.github?.email,
+      githubName: user?.services?.github?.name,
       googleEmail: user?.services?.google?.email,
+      googleName: user?.services?.google?.name,
       githubImage: user?.services?.github?.avatar,
       googleImage: user?.services?.google?.picture
     };
