@@ -69,13 +69,17 @@ export const Profile = () => {
   return (
     <SidebarProvider>
       <AppSidebar />
+      <div className="flex-col h-screen w-full">
       <SidebarTrigger />
-      <div className="grid gap-4 grid-cols-2 grid-rows-4 max-w-6xl min-w-[800px] mx-auto pt-14">
+        <h1 className="text-2xl font-bold pb-4 pl-14 pt-7 border-b border-gray-300 w-full">
+          Your Profile <UserPen className="inline pb-1 ml-1" />
+        </h1>
+        <div className="grid gap-6 grid-cols-2 grid-rows-4 max-w-5xl min-w-[800px] mx-auto pt-14">
         <div className="p-8 rounded-md shadow-sm">
           <h1 className="text-2xl font-bold mb-4">Your Account</h1>
           <p className="text-sm text-gray-500">Update your account's name and email address.</p>
         </div>
-        <div className="bg-slate-50 p-8 rounded-md shadow-md">
+          <div className="bg-slate-50 p-8 rounded-md shadow-sm">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleUpdateProfile)} className="space-y-6">
               <div className="flex items-center gap-4">
@@ -91,7 +95,7 @@ export const Profile = () => {
                       user?.emails?.[0].address.charAt(0).toUpperCase()}
                   </div>
                 )}
-                <Button variant="outline">
+                  <Button type="button" variant="outline">
                   <label htmlFor="profileImage" className="cursor-pointer">
                     Select a new photo
                   </label>
@@ -130,22 +134,29 @@ export const Profile = () => {
                   </FormItem>
                 )}
               />
+                <div className="flex justify-end mt-4">
               <Button type="submit" className="w-24">
                 {form.formState.isSubmitting ? "Saving..." : "Save"}
               </Button>
+                </div>
             </form>
           </Form>
         </div>
         {user?.hasPassword && <PasswordUpdate />}
-        <div className="space-y-4 px-6">
-          <Button variant="outline" onClick={handleLogout} className="w-full shadow-md">
-            Logout
-          </Button>
+          <div className="p-8 rounded-md shadow-sm">
+            <h1 className="text-2xl font-bold mb-4">Delete Account</h1>
+            <p className="text-sm text-gray-500">Permanently delete your account.</p>
         </div>
-        <div className="space-y-4 px-6">
-          <Button variant="destructive" onClick={handleDeleteAccount} className="w-full shadow-md">
+          <div className="bg-slate-50 p-8 rounded-md shadow-sm">
+            <p className="text-sm text-gray-600">
+              Once your account is deleted, all of its resources and data will be permanently
+              deleted. Before deleting your account, please download any data or information that
+              you wish to retain.
+            </p>
+            <Button variant="destructive" onClick={handleDeleteAccount} className="shadow-md mt-4">
             Delete Account
           </Button>
+          </div>
         </div>
       </div>
     </SidebarProvider>
