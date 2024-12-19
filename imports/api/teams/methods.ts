@@ -8,37 +8,34 @@ import { createTeamSchema, getUserTeamsSchema } from "./schemas";
 export const teamsModule = createModule("teams")
   .addMethod("createTeam", createTeamSchema, async ({ name }) => {
     const userId = Meteor.userId();
-    if (!userId) {
-      throw new Meteor.Error("not-authorized", "You must be logged in to create a team");
-    }
-    const user = await UsersCollection.findOneAsync({ _id: userId });
+    if (!userId) throw new Meteor.Error("not-authorized");
 
-    try {
-      const newTeam = await TeamsCollection.insertAsync({
-        name,
-        ownerId: userId,
-        members: [
-          {
-            _id: userId,
-            email: user?.emails?.[0]?.address || "",
-            name: user?.profile?.name || user?.emails?.[0]?.address.split("@")[0] || "",
-            createdAt: user?.createdAt
-          }
-        ],
-        createdAt: new Date()
-      });
+    const newTeam = await TeamsCollection.insertAsync({
+      name,
+      ownerId: userId,
+      members: [{ _id: userId, joinedAt: new Date() }],
+      createdAt: new Date()
+    });
 
-      return newTeam;
-    } catch (error) {
-      console.error("Error inserting team:", error);
-      throw new Meteor.Error("insert-failed", "Could not create the team");
-    }
+    return { newTeam };
   })
   .addMethod("getUserTeams", getUserTeamsSchema, async () => {
     const userId = Meteor.userId();
     if (!userId) throw new Meteor.Error("Not authorized");
 
     const teams = await TeamsCollection.find({ "members._id": userId }).fetchAsync();
-    return teams;
+    const teamsWithMembers = await Promise.all(
+      teams.map(async (team) => {
+        const members = await Promise.all(
+          team.members.map(async (memberId) => {
+            const member = await UsersCollection.findOneAsync({ _id: memberId._id });
+            return member;
+          })
+        );
+        return { ...team, members };
+      })
+    );
+
+    return teamsWithMembers;
   })
   .buildSubmodule();
