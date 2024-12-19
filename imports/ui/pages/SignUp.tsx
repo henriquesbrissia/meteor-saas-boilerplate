@@ -8,10 +8,10 @@ import { type CreateUserValues, signUpSchema } from "/imports/api/auth/schemas";
 import { api } from "/imports/ui/api";
 import { ROUTES } from "/imports/ui/utils/routes";
 
-import { Button } from "../components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/card";
-import { Input } from "../components/input";
-import { Label } from "../components/label";
+import { Button } from "../elements/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
+import { Input } from "../elements/input";
+import { Label } from "../elements/label";
 
 export const SignUp = () => {
   const {
@@ -119,9 +119,9 @@ export const SignUp = () => {
               {signUp.isPending ? "Signing up..." : "Sign up"}
             </Button>
             <div className="relative flex items-center">
-              <div className="flex-grow border-t border-gray-400"></div>
-              <span className="flex-shrink m-4 text-gray-400 text-xs">or sign up with</span>
-              <div className="flex-grow border-t border-gray-400"></div>
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="flex-shrink m-4 text-gray-500 text-xs">or continue with</span>
+              <div className="flex-grow border-t border-gray-300"></div>
             </div>
             <div className="flex mb-6 gap-5">
               <Button onClick={googleAuth} variant="outline" className="w-full">

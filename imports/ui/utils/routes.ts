@@ -5,5 +5,6 @@ export const ROUTES = {
   RESET_PASSWORD: "/reset-password",
   HOME: "/",
   DASHBOARD: "/dashboard",
-  PROFILE: "/profile"
+  PROFILE: "/profile",
+  TEAMS: "/teams"
 };
