@@ -1,5 +1,9 @@
-import { Mongo } from "meteor/mongo";
+import { createTypedCollection } from "create-typed-collection";
 
-import type { TeamValues } from "./schemas";
+import { teamSchema } from "./schemas";
 
-export const TeamsCollection = new Mongo.Collection<TeamValues>("teams");
+export const TeamsCollection = createTypedCollection({
+  name: "teams",
+  schema: teamSchema,
+  customCollectionMethods: {}
+});
