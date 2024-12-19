@@ -1,13 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
+import { UserPen } from "lucide-react";
 import { Meteor } from "meteor/meteor";
 import type { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 
 import type { ProfileValues } from "/imports/api/users/schemas";
 import { profileSchema } from "/imports/api/users/schemas";
-import { ROUTES } from "/imports/ui/utils/routes";
 
 import { api } from "../api";
 import { AppSidebar } from "../components/AppSidebar";
@@ -47,20 +45,11 @@ export const Profile = () => {
     }
   };
 
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const handleLogout = () => {
-    Meteor.logout();
-    queryClient.clear();
-    navigate(ROUTES.SIGN_IN);
-  };
-
   const deleteAccount = api.users.deleteAccount.useMutation({
     onError: (e) => alert(e.message),
     onSuccess: () => {
       alert("Account deleted successfully.");
-      handleLogout();
+      Meteor.logout();
     }
   });
 
