@@ -10,12 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../elements/input";
 
 export const PasswordUpdate = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-    reset
-  } = useForm<PasswordValues>({
+  const form = useForm<PasswordValues>({
     defaultValues: {
       oldPassword: "",
       newPassword: "",
@@ -30,12 +25,10 @@ export const PasswordUpdate = () => {
         alert(`Error: ${err.message}`);
       } else {
         alert("Password updated successfully!");
-        reset();
+        form.reset();
       }
     });
   };
-
-  const form = useForm();
 
   return (
     <>
@@ -47,10 +40,10 @@ export const PasswordUpdate = () => {
       </div>
       <div className="bg-slate-50 p-8 rounded-md shadow-md">
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="oldPasssword"
+              name="oldPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Old Password</FormLabel>
@@ -59,7 +52,7 @@ export const PasswordUpdate = () => {
                       id="oldPassword"
                       type="password"
                       {...field}
-                      {...register("oldPassword")}
+                      {...form.register("oldPassword")}
                     />
                   </FormControl>
                   <FormMessage />
@@ -68,7 +61,7 @@ export const PasswordUpdate = () => {
             />
             <FormField
               control={form.control}
-              name="newPasssword"
+              name="newPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>New Password</FormLabel>
@@ -77,7 +70,7 @@ export const PasswordUpdate = () => {
                       id="newPassword"
                       type="password"
                       {...field}
-                      {...register("newPassword")}
+                      {...form.register("newPassword")}
                     />
                   </FormControl>
                   <FormMessage />
@@ -86,7 +79,7 @@ export const PasswordUpdate = () => {
             />
             <FormField
               control={form.control}
-              name="confirmPasssword"
+              name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
@@ -95,16 +88,18 @@ export const PasswordUpdate = () => {
                       id="confirmPassword"
                       type="password"
                       {...field}
-                      {...register("confirmPassword")}
+                      {...form.register("confirmPassword")}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-24 m-auto">
-              {isSubmitting ? "Saving..." : "Save"}
-            </Button>
+            <div className="flex justify-end mt-4">
+              <Button type="submit" className="w-24">
+                {form.formState.isSubmitting ? "Saving..." : "Save"}
+              </Button>
+            </div>
           </form>
         </Form>
       </div>
