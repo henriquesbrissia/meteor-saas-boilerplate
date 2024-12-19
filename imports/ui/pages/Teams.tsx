@@ -19,26 +19,24 @@ export const Teams = () => {
     <SidebarProvider>
       <AppSidebar />
       <SidebarTrigger />
-      <div className="container mx-auto p-6">
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="text-xl font-bold">Your Teams</CardTitle>
-          </CardHeader>
-          <CardContent>
+        <h1 className="text-2xl font-bold pb-4 pl-14 pt-7 border-b border-gray-300 w-full">
+          Your Teams <Users className="inline pb-1 ml-1" />
+        </h1>
+        <div className="flex-col max-w-5xl mx-auto p-6">
             {teams?.length ? (
               <ul className="space-y-4">
                 {isLoading ? (
                   <p>Loading teams...</p>
                 ) : (
                   teams.map((team) => (
-                    <div key={team._id} className="border rounded-lg p-4 my-4 shadow">
+                  <div key={team._id} className="border border-gray-300 p-6 bg-slate-50 shadow-md">
                       <h2 className="text-xl font-bold mb-2">{team.name}</h2>
                       <Table className="mb-4">
                         <TableHeader>
                           <TableRow>
                             <TableHead>Name</TableHead>
                             <TableHead>Email</TableHead>
-                            <TableHead>Sign up</TableHead>
+                          <TableHead>Joined At</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
