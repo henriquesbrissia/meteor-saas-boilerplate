@@ -16,6 +16,19 @@ export const getUserTeamsSchema = z.object({
   _id: z.string()
 });
 
+export const addMemberSchema = z.object({
+  teamId: z.string(),
+  email: z.string().email()
+});
+
+export const TeamIdSchema = z.object({
+  teamId: z.string()
+});
+
+export type TeamIdValues = z.infer<typeof TeamIdSchema>;
+
+export type AddMemberValues = z.infer<typeof addMemberSchema>;
+
 export type CreateTeamValues = z.infer<typeof createTeamSchema>;
 
 export type TeamValues = z.infer<typeof teamSchema>;
