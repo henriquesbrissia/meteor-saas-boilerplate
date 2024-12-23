@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "../elements/dialog";
+import { Form } from "../elements/form";
 import { Input } from "../elements/input";
 
 export const CreateTeamDialog = () => {
@@ -53,24 +54,28 @@ export const CreateTeamDialog = () => {
           <DialogTitle>Create New Team</DialogTitle>
           <DialogDescription>Enter new team name to create.</DialogDescription>
         </DialogHeader>
-        <form className="space-y-4" onSubmit={form.handleSubmit(handleCreateTeam)}>
-          <div>
-            <Input type="text" placeholder="Enter team name" {...form.register("name")} />
-            {form.formState.errors.name && (
-              <p className="text-red-500 text-sm">{form.formState.errors.name.message}</p>
-            )}
-          </div>
-          <DialogFooter>
-            <DialogClose>
-              <Button variant="secondary" type="button" onClick={() => form.reset()}>
-                Cancel
-              </Button>
-              <Button className="ml-3" type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting ? "Creating..." : "Create team"}
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </form>
+        <Form {...form}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(handleCreateTeam)}>
+            <div>
+              <Input type="text" placeholder="Team name" {...form.register("name")} />
+              {form.formState.errors.name && (
+                <p className="text-red-500 text-sm">{form.formState.errors.name.message}</p>
+              )}
+            </div>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline" type="button" onClick={() => form.reset()}>
+                  Cancel
+                </Button>
+              </DialogClose>
+              <DialogClose asChild>
+                <Button className="ml-3" type="submit" disabled={form.formState.isSubmitting}>
+                  {form.formState.isSubmitting ? "Creating..." : "Create team"}
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
