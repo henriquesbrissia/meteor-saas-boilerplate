@@ -2,6 +2,7 @@ import { Users } from "lucide-react";
 import { Meteor } from "meteor/meteor";
 
 import { api } from "../api";
+import { AddMemberDialog } from "../components/AddMemberDialog";
 import { AppSidebar } from "../components/AppSidebar";
 import { CreateTeamDialog } from "../components/CreateTeamDialog";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
@@ -12,6 +13,8 @@ export const Teams = () => {
   if (!userId) return <p>You must be logged in to continue</p>;
 
   const { data: teams = [], isLoading, error } = api.teams.getUserTeams.useQuery({ _id: userId });
+
+  if (isLoading) return <p>Loading teams...</p>;
 
   if (error) return <p>Error loading teams: {error.message}</p>;
 
@@ -70,6 +73,7 @@ export const Teams = () => {
                         )}
                       </TableBody>
                     </Table>
+                    <AddMemberDialog teamId={team._id} />
                   </div>
                 ))
               )}
