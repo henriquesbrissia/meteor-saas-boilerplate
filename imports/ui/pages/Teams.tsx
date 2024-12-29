@@ -5,6 +5,7 @@ import { api } from "../api";
 import { AddMemberDialog } from "../components/AddMemberDialog";
 import { AppSidebar } from "../components/AppSidebar";
 import { CreateTeamDialog } from "../components/CreateTeamDialog";
+import { EditTeamDialog } from "../components/EditTeamDialog";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../elements/table";
 
@@ -34,7 +35,10 @@ export const Teams = () => {
               ) : (
                 teams.map((team) => (
                   <div key={team._id} className="border border-gray-300 p-6 bg-slate-50 shadow-md">
-                    <h2 className="text-xl font-bold mb-2">{team.name}</h2>
+                    <h2 className="text-xl font-bold mb-2">
+                      {team.name}
+                      <EditTeamDialog teamId={team._id} name={team.name} />{" "}
+                    </h2>
                     <Table className="mb-4">
                       <TableHeader>
                         <TableRow>
