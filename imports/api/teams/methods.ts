@@ -3,7 +3,7 @@ import { Meteor } from "meteor/meteor";
 
 import { UsersCollection } from "../users/collection";
 import { TeamsCollection } from "./collection";
-import { addMemberSchema, createTeamSchema, getUserTeamsSchema } from "./schemas";
+import { addMemberSchema, createTeamSchema, editTeamSchema, getUserTeamsSchema } from "./schemas";
 
 export const teamsModule = createModule("teams")
   .addMethod("createTeam", createTeamSchema, async ({ name }) => {
@@ -18,6 +18,19 @@ export const teamsModule = createModule("teams")
     });
 
     return { newTeam };
+  })
+  .addMethod("editTeam", editTeamSchema, async ({ teamId, name }) => {
+    const currentUserId = Meteor.userId();
+
+    const team = await TeamsCollection.findOneAsync({ _id: teamId });
+    if (!team) throw new Meteor.Error("Team not found");
+    if (team.ownerId !== currentUserId) {
+      throw new Meteor.Error("Not authorized to add members");
+    }
+
+    await TeamsCollection.updateAsync(teamId, {
+      $set: { name }
+    });
   })
   .addMethod("getUserTeams", getUserTeamsSchema, async () => {
     const userId = Meteor.userId();

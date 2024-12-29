@@ -12,6 +12,11 @@ export const createTeamSchema = z.object({
   name: z.string()
 });
 
+export const editTeamSchema = z.object({
+  teamId: z.string(),
+  name: z.string()
+});
+
 export const getUserTeamsSchema = z.object({
   _id: z.string()
 });
@@ -30,5 +35,7 @@ export type TeamIdValues = z.infer<typeof TeamIdSchema>;
 export type AddMemberValues = z.infer<typeof addMemberSchema>;
 
 export type CreateTeamValues = z.infer<typeof createTeamSchema>;
+
+export type EditTeamValues = z.infer<typeof editTeamSchema>;
 
 export type TeamValues = z.infer<typeof teamSchema>;
