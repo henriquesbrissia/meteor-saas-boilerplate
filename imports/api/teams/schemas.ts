@@ -26,13 +26,28 @@ export const addMemberSchema = z.object({
   email: z.string().email()
 });
 
-export const TeamIdSchema = z.object({
+export const teamIdSchema = z.object({
   teamId: z.string()
 });
 
-export type TeamIdValues = z.infer<typeof TeamIdSchema>;
+export const removeMemberSchema = z.object({
+  teamId: z.string(),
+  memberId: z.string()
+});
+
+export const removeMemberDialog = z.object({
+  teamId: z.string(),
+  memberId: z.string(),
+  memberName: z.string()
+});
+
+export type TeamIdValues = z.infer<typeof teamIdSchema>;
 
 export type AddMemberValues = z.infer<typeof addMemberSchema>;
+
+export type RemoveMemberValues = z.infer<typeof removeMemberSchema>;
+
+export type RemoveMemberDialogProps = z.infer<typeof removeMemberDialog>;
 
 export type CreateTeamValues = z.infer<typeof createTeamSchema>;
 

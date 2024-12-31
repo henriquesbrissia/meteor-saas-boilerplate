@@ -3,7 +3,13 @@ import { Meteor } from "meteor/meteor";
 
 import { UsersCollection } from "../users/collection";
 import { TeamsCollection } from "./collection";
-import { addMemberSchema, createTeamSchema, editTeamSchema, getUserTeamsSchema } from "./schemas";
+import {
+  addMemberSchema,
+  createTeamSchema,
+  editTeamSchema,
+  getUserTeamsSchema,
+  removeMemberSchema
+} from "./schemas";
 
 export const teamsModule = createModule("teams")
   .addMethod("createTeam", createTeamSchema, async ({ name }) => {
@@ -73,6 +79,23 @@ export const teamsModule = createModule("teams")
           joinedAt: new Date()
         }
       }
+    });
+  })
+  .addMethod("removeMember", removeMemberSchema, async ({ teamId, memberId }) => {
+    const currentUserId = Meteor.userId();
+    if (!currentUserId) throw new Meteor.Error("Not authorized");
+
+    const team = await TeamsCollection.findOneAsync({ _id: teamId });
+    if (!team) throw new Meteor.Error("Team not found");
+    if (team.ownerId !== currentUserId) {
+      throw new Meteor.Error("Not authorized to remove members");
+    }
+    if (memberId === currentUserId) {
+      throw new Meteor.Error("You cannot remove yourself from the team.");
+    }
+
+    await TeamsCollection.updateAsync(teamId, {
+      $pull: { members: { _id: memberId } }
     });
   })
   .buildSubmodule();
