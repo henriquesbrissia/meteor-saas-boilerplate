@@ -6,6 +6,7 @@ import { AddMemberDialog } from "../components/AddMemberDialog";
 import { AppSidebar } from "../components/AppSidebar";
 import { CreateTeamDialog } from "../components/CreateTeamDialog";
 import { EditTeamDialog } from "../components/EditTeamDialog";
+import { RemoveMemberDialog } from "../components/RemovememberDialog";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../elements/table";
 
@@ -65,6 +66,13 @@ export const Teams = () => {
                                 {member?.createdAt
                                   ? new Date(member.createdAt).toLocaleDateString()
                                   : "N/A"}
+                              </TableCell>
+                              <TableCell>
+                                <RemoveMemberDialog
+                                  teamId={team._id}
+                                  memberId={member?._id || ""}
+                                  memberName={member?.profile?.name || "Member"}
+                                />
                               </TableCell>
                             </TableRow>
                           ))
