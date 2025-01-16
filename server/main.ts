@@ -100,7 +100,7 @@ Accounts.onCreateUser(async (options: UserOptions, user: User): Promise<User> =>
     const teamId = await TeamsCollection.insertAsync({
       name: `${name}'s Team`,
       ownerId: user._id,
-      members: [{ _id: user._id, joinedAt: new Date() }],
+      members: [{ _id: user._id, role: "admin", joinedAt: new Date() }],
       createdAt: new Date()
     });
 

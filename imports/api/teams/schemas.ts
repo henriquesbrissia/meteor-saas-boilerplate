@@ -4,7 +4,9 @@ export const teamSchema = z.object({
   _id: z.string(),
   name: z.string(),
   ownerId: z.string(),
-  members: z.array(z.object({ _id: z.string(), joinedAt: z.date() })),
+  members: z.array(
+    z.object({ _id: z.string(), role: z.enum(["admin", "member"]), joinedAt: z.date() })
+  ),
   createdAt: z.union([z.date(), z.string()]).optional()
 });
 

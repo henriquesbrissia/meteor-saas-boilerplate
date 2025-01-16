@@ -73,6 +73,7 @@ export const teamsModule = createModule("teams")
       $addToSet: {
         members: {
           _id: user?._id,
+          role: "member",
           joinedAt: new Date()
         }
       }
