@@ -6,6 +6,7 @@ import { TeamsCollection } from "./collection";
 import {
   addMemberSchema,
   createTeamSchema,
+  editRoleSchema,
   editTeamSchema,
   getUserTeamsSchema,
   removeMemberSchema
@@ -37,6 +38,23 @@ export const teamsModule = createModule("teams")
     await TeamsCollection.updateAsync(teamId, {
       $set: { name }
     });
+  })
+  .addMethod("editRole", editRoleSchema, async ({ teamId, memberId, role }) => {
+    const currentUserId = Meteor.userId();
+
+    const team = await TeamsCollection.findOneAsync({ _id: teamId });
+    const currentUser = team?.members.find((member) => member._id === currentUserId);
+
+    if (!team) throw new Meteor.Error("Team not found");
+    if (currentUser?.role !== "admin") throw new Meteor.Error("Not authorized to edit roles");
+    if (memberId === currentUserId) throw new Meteor.Error("You cannot change your own role.");
+
+    await TeamsCollection.updateAsync(
+      { _id: teamId, "members._id": memberId },
+      { $set: { "members.$.role": role } }
+    );
+
+    return { success: true };
   })
   .addMethod("getUserTeams", getUserTeamsSchema, async () => {
     const currentUserId = Meteor.userId();

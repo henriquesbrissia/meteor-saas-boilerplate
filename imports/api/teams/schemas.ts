@@ -37,10 +37,23 @@ export const removeMemberSchema = z.object({
   memberId: z.string()
 });
 
+export const editRoleSchema = z.object({
+  teamId: z.string(),
+  memberId: z.string(),
+  role: z.enum(["admin", "member"])
+});
+
 export const removeMemberDialog = z.object({
   teamId: z.string(),
   memberId: z.string(),
   memberName: z.string()
+});
+
+export const editRoleDialog = z.object({
+  teamId: z.string(),
+  memberId: z.string(),
+  memberName: z.string(),
+  role: z.enum(["admin", "member"])
 });
 
 export type TeamIdValues = z.infer<typeof teamIdSchema>;
@@ -49,7 +62,11 @@ export type AddMemberValues = z.infer<typeof addMemberSchema>;
 
 export type RemoveMemberValues = z.infer<typeof removeMemberSchema>;
 
+export type EditRoleValues = z.infer<typeof editRoleSchema>;
+
 export type RemoveMemberDialogProps = z.infer<typeof removeMemberDialog>;
+
+export type EditRoleDialogProps = z.infer<typeof editRoleDialog>;
 
 export type CreateTeamValues = z.infer<typeof createTeamSchema>;
 
