@@ -35,7 +35,7 @@ export const Teams = () => {
                   <div key={team._id} className="border border-gray-300 p-6 bg-slate-50 shadow-md">
                     <h2 className="text-xl font-bold mb-2">
                       {team.name}
-                      <EditTeamDialog teamId={team._id} name={team.name} />{" "}
+                    {team.isAdmin && <EditTeamDialog teamId={team._id} name={team.name} />}
                     </h2>
                     <Table className="mb-4">
                       <TableHeader>
@@ -67,6 +67,7 @@ export const Teams = () => {
                               <TableCell>
                               {new Date(user.joinedAt).toLocaleDateString() || "N/A"}
                               </TableCell>
+                            {user._id !== userId && team.isAdmin && (
                               <TableCell>
                                 <RemoveMemberDialog
                                   teamId={team._id}
@@ -74,6 +75,7 @@ export const Teams = () => {
                                   memberName={user?.profile?.name || "Member"}
                                 />
                               </TableCell>
+                            )}
                             </TableRow>
                           ))
                         ) : (
@@ -85,7 +87,7 @@ export const Teams = () => {
                         )}
                       </TableBody>
                     </Table>
-                    <AddMemberDialog teamId={team._id} />
+                  {team.isAdmin && <AddMemberDialog teamId={team._id} />}
                   </div>
               ))}
             </ul>

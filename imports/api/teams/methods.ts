@@ -45,13 +45,20 @@ export const teamsModule = createModule("teams")
     const teams = await TeamsCollection.find({ "members._id": currentUserId }).fetchAsync();
     const teamsWithMembers = await Promise.all(
       teams.map(async (team) => {
-        const members = await Promise.all(
-          team.members.map(async (memberId) => {
-            const member = await UsersCollection.findOneAsync({ _id: memberId._id });
-            return member;
+        const users = await Promise.all(
+          team.members.map(async (member) => {
+            const user = await UsersCollection.findOneAsync({ _id: member._id });
+            return {
+              ...user,
+              role: member.role,
+              joinedAt: member.joinedAt
+            };
           })
         );
-        return { ...team, members };
+        const currentUser = team.members.find((member) => member._id === currentUserId);
+        const isAdmin = currentUser?.role === "admin";
+
+        return { ...team, users, isAdmin };
       })
     );
 
