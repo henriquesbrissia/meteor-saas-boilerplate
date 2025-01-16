@@ -41,7 +41,7 @@ export const AddMemberDialog = ({ teamId }: TeamIdValues) => {
       await addMember.mutateAsync({ ...data, teamId });
       console.log("Member added successfully");
     } catch (error) {
-      console.error("Error creating team:", error);
+      console.error("Error adding member:", error);
     }
   };
 

@@ -31,10 +31,7 @@ export const Teams = () => {
         <div className="flex-col max-w-5xl mx-auto p-6">
           {teams?.length ? (
             <ul className="space-y-4">
-              {isLoading ? (
-                <p>Loading teams...</p>
-              ) : (
-                teams.map((team) => (
+              {teams.map((team) => (
                   <div key={team._id} className="border border-gray-300 p-6 bg-slate-50 shadow-md">
                     <h2 className="text-xl font-bold mb-2">
                       {team.name}
@@ -49,13 +46,18 @@ export const Teams = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {team.members.length > 0 ? (
-                          team.members.map((member) => (
-                            <TableRow key={member?._id}>
+                      {team.users.length > 0 ? (
+                        team.users.map((user) => (
+                          <TableRow key={user._id}>
+                            <TableCell>
+                              {user?.profile?.name ||
+                                user?.services?.github?.name ||
+                                user?.services?.google?.name}
+                            </TableCell>
                               <TableCell>
-                                {member?.profile?.name ||
-                                  member?.services?.github?.name ||
-                                  member?.services?.google?.name}
+                              {user?.emails?.[0]?.address ||
+                                user?.services?.github?.email ||
+                                user?.services?.google?.email}
                               </TableCell>
                               <TableCell>
                                 {member?.emails?.[0]?.address ||
@@ -63,15 +65,13 @@ export const Teams = () => {
                                   member?.services?.google?.email}
                               </TableCell>
                               <TableCell>
-                                {member?.createdAt
-                                  ? new Date(member.createdAt).toLocaleDateString()
-                                  : "N/A"}
+                              {new Date(user.joinedAt).toLocaleDateString() || "N/A"}
                               </TableCell>
                               <TableCell>
                                 <RemoveMemberDialog
                                   teamId={team._id}
-                                  memberId={member?._id || ""}
-                                  memberName={member?.profile?.name || "Member"}
+                                  memberId={user?._id || ""}
+                                  memberName={user?.profile?.name || "Member"}
                                 />
                               </TableCell>
                             </TableRow>
@@ -87,8 +87,7 @@ export const Teams = () => {
                     </Table>
                     <AddMemberDialog teamId={team._id} />
                   </div>
-                ))
-              )}
+              ))}
             </ul>
           ) : (
             <p className="text-gray-500">You have no teams yet.</p>

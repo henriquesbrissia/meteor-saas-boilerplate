@@ -13,13 +13,13 @@ import {
 
 export const teamsModule = createModule("teams")
   .addMethod("createTeam", createTeamSchema, async ({ name }) => {
-    const userId = Meteor.userId();
-    if (!userId) throw new Meteor.Error("not-authorized");
+    const currentUserId = Meteor.userId();
+    if (!currentUserId) throw new Meteor.Error("Not authorized");
 
     const newTeam = await TeamsCollection.insertAsync({
       name,
-      ownerId: userId,
-      members: [{ _id: userId, joinedAt: new Date() }],
+      ownerId: currentUserId,
+      members: [{ _id: currentUserId, role: "admin", joinedAt: new Date() }],
       createdAt: new Date()
     });
 
@@ -39,10 +39,10 @@ export const teamsModule = createModule("teams")
     });
   })
   .addMethod("getUserTeams", getUserTeamsSchema, async () => {
-    const userId = Meteor.userId();
-    if (!userId) throw new Meteor.Error("Not authorized");
+    const currentUserId = Meteor.userId();
+    if (!currentUserId) throw new Meteor.Error("Not authorized");
 
-    const teams = await TeamsCollection.find({ "members._id": userId }).fetchAsync();
+    const teams = await TeamsCollection.find({ "members._id": currentUserId }).fetchAsync();
     const teamsWithMembers = await Promise.all(
       teams.map(async (team) => {
         const members = await Promise.all(
@@ -67,10 +67,7 @@ export const teamsModule = createModule("teams")
     }
 
     const user = await UsersCollection.findOneAsync({ "emails.address": email });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
+    if (!user) throw new Meteor.Error("User not found");
 
     await TeamsCollection.updateAsync(teamId, {
       $addToSet: {
@@ -92,7 +89,6 @@ export const teamsModule = createModule("teams")
     }
     if (memberId === currentUserId) {
       throw new Meteor.Error("You cannot remove yourself from the team.");
-    }
 
     await TeamsCollection.updateAsync(teamId, {
       $pull: { members: { _id: memberId } }
