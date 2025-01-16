@@ -29,10 +29,10 @@ export const teamsModule = createModule("teams")
     const currentUserId = Meteor.userId();
 
     const team = await TeamsCollection.findOneAsync({ _id: teamId });
+    const currentUser = team?.members.find((member) => member._id === currentUserId);
+
     if (!team) throw new Meteor.Error("Team not found");
-    if (team.ownerId !== currentUserId) {
-      throw new Meteor.Error("Not authorized to add members");
-    }
+    if (currentUser?.role !== "admin") throw new Meteor.Error("Not authorized to add members");
 
     await TeamsCollection.updateAsync(teamId, {
       $set: { name }
@@ -68,10 +68,10 @@ export const teamsModule = createModule("teams")
     const currentUserId = Meteor.userId();
 
     const team = await TeamsCollection.findOneAsync({ _id: teamId });
+    const currentUser = team?.members.find((member) => member._id === currentUserId);
+
     if (!team) throw new Meteor.Error("Team not found");
-    if (team.ownerId !== currentUserId) {
-      throw new Meteor.Error("Not authorized to add members");
-    }
+    if (currentUser?.role !== "admin") throw new Meteor.Error("Not authorized to add members");
 
     const user = await UsersCollection.findOneAsync({ "emails.address": email });
     if (!user) throw new Meteor.Error("User not found");
@@ -91,11 +91,11 @@ export const teamsModule = createModule("teams")
     if (!currentUserId) throw new Meteor.Error("Not authorized");
 
     const team = await TeamsCollection.findOneAsync({ _id: teamId });
+    const currentUser = team?.members.find((member) => member._id === currentUserId);
+
     if (!team) throw new Meteor.Error("Team not found");
-    if (team.ownerId !== currentUserId) {
-      throw new Meteor.Error("Not authorized to remove members");
-    }
-    if (memberId === currentUserId) {
+    if (currentUser?.role !== "admin") throw new Meteor.Error("Not authorized to remove members");
+    if (memberId === currentUserId)
       throw new Meteor.Error("You cannot remove yourself from the team.");
 
     await TeamsCollection.updateAsync(teamId, {
