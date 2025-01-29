@@ -5,7 +5,9 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { ProtectedRoutes } from "/imports/ui/components/ProtectedRoutes";
 import { Dashboard } from "/imports/ui/pages/Dashboard";
+import { ForgotPassword } from "/imports/ui/pages/ForgotPassword";
 import { Profile } from "/imports/ui/pages/Profile";
+import { ResetPassword } from "/imports/ui/pages/ResetPassword";
 import { SignIn } from "/imports/ui/pages/SignIn";
 import { SignUp } from "/imports/ui/pages/SignUp";
 import { Teams } from "/imports/ui/pages/Teams";
@@ -23,6 +25,8 @@ Meteor.startup(() => {
           <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.SIGN_IN} replace />} />
           <Route path={ROUTES.SIGN_IN} element={<SignIn />} />
           <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
+          <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
+          <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           <Route element={<ProtectedRoutes />}>
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />
