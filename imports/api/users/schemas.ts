@@ -11,6 +11,10 @@ export const usersSchema = z.object({
       password: z.object({
         bcrypt: z.string()
       }),
+      twoFactorAuthentication: z.object({
+        secret: z.string(),
+        type: z.string()
+      }),
       google: z.object({
         accessToken: z.string(),
         email: z.string().email(),

@@ -23,6 +23,7 @@ export const usersModule = createModule("users")
     return {
       _id: user?._id,
       hasPassword: !!user?.services?.password,
+      hasTwoFAEnabled: !!user?.services?.twoFactorAuthentication?.type,
       profile: user?.profile,
       emails: user?.emails,
       githubEmail: user?.services?.github?.email,

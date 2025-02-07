@@ -12,6 +12,12 @@ export const signInSchema = z.object({
 
 export type AuthValues = z.infer<typeof signInSchema>;
 
+export const twofaSchema = z.object({
+  twofaCode: z.string().min(1, "2FA code is required")
+});
+
+export type TwoFaFormValues = z.infer<typeof twofaSchema>;
+
 export const forgotPasswordSchema = z.object({
   email: z.string().email("Invalid email address")
 });

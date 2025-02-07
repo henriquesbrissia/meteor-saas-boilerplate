@@ -10,6 +10,7 @@ import { profileSchema } from "/imports/api/users/schemas";
 import { api } from "../api";
 import { AppSidebar } from "../components/AppSidebar";
 import { PasswordUpdate } from "../components/PasswordUpdate";
+import { SetTwoFactorAuth } from "../components/SetTwoFactorAuth";
 import { Button } from "../elements/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../elements/form";
 import { Input } from "../elements/input";
@@ -167,6 +168,7 @@ export const Profile = () => {
             </Form>
           </div>
           {user?.hasPassword && <PasswordUpdate />}
+          {user?.hasPassword && <SetTwoFactorAuth />}
           <div className="p-8 rounded-md shadow-sm">
             <h1 className="text-2xl font-bold mb-4">Delete Account</h1>
             <p className="text-sm text-gray-500">Permanently delete your account.</p>
