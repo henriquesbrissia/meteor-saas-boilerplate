@@ -19,6 +19,7 @@ import {
 } from "../elements/dialog";
 import { Form } from "../elements/form";
 import { Input } from "../elements/input";
+import { useToast } from "../hooks/use-toast";
 
 export const AddMemberDialog = ({ teamId }: TeamIdValues) => {
   const form = useForm<AddMemberValues>({
@@ -27,12 +28,23 @@ export const AddMemberDialog = ({ teamId }: TeamIdValues) => {
   });
 
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const addMember = api.teams.addMember.useMutation({
-    onError: (e) => alert(e.message),
+    onError: (e) => {
+      toast({
+        title: "Error",
+        description: e.message || "Error adding member.",
+        variant: "destructive"
+      });
+    },
     onSuccess: async () => {
       form.reset();
       await queryClient.invalidateQueries();
+      toast({
+        title: "Success",
+        description: "Member added successfully"
+      });
     }
   });
 

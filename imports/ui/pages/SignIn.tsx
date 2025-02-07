@@ -12,6 +12,8 @@ import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { Input } from "../elements/input";
 import { Label } from "../elements/label";
+import { Toaster } from "../elements/toaster";
+import { useToast } from "../hooks/use-toast";
 
 export const SignIn = () => {
   const {
@@ -43,7 +45,11 @@ export const SignIn = () => {
   const googleAuth = () => {
     Meteor.loginWithGoogle({}, (error) => {
       if (error) {
-        alert(`Error: ${error.message}`);
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive"
+        });
       }
       navigate(ROUTES.DASHBOARD);
     });
@@ -56,7 +62,11 @@ export const SignIn = () => {
       },
       (error) => {
         if (error) {
-          alert(`Error: ${error.message}`);
+          toast({
+            title: "Error",
+            description: error.message,
+            variant: "destructive"
+          });
         }
         navigate(ROUTES.DASHBOARD);
       }
@@ -141,6 +151,7 @@ export const SignIn = () => {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   );
 };

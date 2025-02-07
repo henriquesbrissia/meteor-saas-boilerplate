@@ -20,6 +20,7 @@ import {
 } from "../elements/dialog";
 import { Form } from "../elements/form";
 import { Input } from "../elements/input";
+import { useToast } from "../hooks/use-toast";
 
 export const EditTeamDialog = ({ teamId, name }: EditTeamValues) => {
   const form = useForm<EditTeamValues>({
@@ -28,12 +29,23 @@ export const EditTeamDialog = ({ teamId, name }: EditTeamValues) => {
   });
 
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const editTeam = api.teams.editTeam.useMutation({
-    onError: (error) => console.error("Error editing team:", error),
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Error editing team.",
+        variant: "destructive"
+      });
+    },
     onSuccess: async () => {
       form.reset();
       await queryClient.invalidateQueries();
+      toast({
+        title: "Success",
+        description: "Team edited successfully!"
+      });
     }
   });
 

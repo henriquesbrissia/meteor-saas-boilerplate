@@ -8,6 +8,7 @@ import { passwordSchema } from "/imports/api/users/schemas";
 import { Button } from "../elements/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../elements/form";
 import { Input } from "../elements/input";
+import { useToast } from "../hooks/use-toast";
 
 export const PasswordUpdate = () => {
   const form = useForm<PasswordValues>({
@@ -19,12 +20,21 @@ export const PasswordUpdate = () => {
     resolver: zodResolver(passwordSchema)
   });
 
+  const { toast } = useToast();
+
   const onSubmit = (data: PasswordValues) => {
     Accounts.changePassword(data.oldPassword, data.newPassword, (err) => {
       if (err) {
-        alert(`Error: ${err.message}`);
+        toast({
+          title: "Error",
+          description: err.message || "Error changing password.",
+          variant: "destructive"
+        });
       } else {
-        alert("Password updated successfully!");
+        toast({
+          title: "Success",
+          description: "Password updated successfully!"
+        });
         form.reset();
       }
     });
@@ -38,7 +48,7 @@ export const PasswordUpdate = () => {
           Ensure your account is using a long, random password to stay secure.
         </p>
       </div>
-      <div className="bg-slate-50 p-8 rounded-md shadow-md">
+      <div className="bg-slate-50 p-8 rounded-md shadow-sm">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField

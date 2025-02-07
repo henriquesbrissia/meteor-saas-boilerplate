@@ -11,6 +11,8 @@ import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { Input } from "../elements/input";
 import { Label } from "../elements/label";
+import { Toaster } from "../elements/toaster";
+import { useToast } from "../hooks/use-toast";
 
 export const ForgotPassword = () => {
   const form = useForm<ForgotPasswordValues>({
@@ -18,11 +20,23 @@ export const ForgotPassword = () => {
     resolver: zodResolver(forgotPasswordSchema)
   });
 
+  const { toast } = useToast();
+
   const sendEmail = api.auth.forgotPassword.useMutation({
-    onError: (error) => console.error("Error sending token:", error),
+    onError: (error) => {
+      console.error("Error sending token:", error),
+        toast({
+          title: "Error",
+          description: error.message || "Error sending token.",
+          variant: "destructive"
+        });
+    },
     onSuccess: () => {
       form.reset();
-      alert("Reset email sent successfully.");
+      toast({
+        title: "Success",
+        description: "Reset email sent successfully."
+      });
     }
   });
 
@@ -72,6 +86,7 @@ export const ForgotPassword = () => {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   );
 };

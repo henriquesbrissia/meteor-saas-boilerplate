@@ -11,6 +11,8 @@ import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { Input } from "../elements/input";
 import { Label } from "../elements/label";
+import { Toaster } from "../elements/toaster";
+import { useToast } from "../hooks/use-toast";
 
 export const ResetPassword = () => {
   const form = useForm<ResetPasswordValues>({
@@ -21,6 +23,7 @@ export const ResetPassword = () => {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
 
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   const resetPassword = api.auth.resetPassword.useMutation({
@@ -28,7 +31,10 @@ export const ResetPassword = () => {
     onSuccess: () => {
       form.reset();
       navigate(ROUTES.SIGN_IN);
-      alert("Password successfully redefined");
+      toast({
+        title: "Success",
+        description: "Password successfully redefined"
+      });
     }
   });
 
@@ -90,6 +96,7 @@ export const ResetPassword = () => {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   );
 };

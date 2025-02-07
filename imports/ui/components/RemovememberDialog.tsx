@@ -15,17 +15,26 @@ import {
   DialogTitle,
   DialogTrigger
 } from "../elements/dialog";
+import { useToast } from "../hooks/use-toast";
 
 export const RemoveMemberDialog = ({ teamId, memberId, memberName }: RemoveMemberDialogProps) => {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const removeMember = api.teams.removeMember.useMutation({
     onError: (error) => {
-      console.error("Error removing member:", error);
-      alert(error.message || "An error occurred while removing the member.");
+      toast({
+        title: "Error",
+        description: error.message || "An error occurred while removing the member.",
+        variant: "destructive"
+      });
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries();
+      toast({
+        title: "Success",
+        description: "Member removed successfully!"
+      });
     }
   });
 

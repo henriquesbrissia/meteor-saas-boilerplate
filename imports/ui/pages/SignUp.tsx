@@ -12,6 +12,8 @@ import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { Input } from "../elements/input";
 import { Label } from "../elements/label";
+import { Toaster } from "../elements/toaster";
+import { useToast } from "../hooks/use-toast";
 
 export const SignUp = () => {
   const {
@@ -24,6 +26,7 @@ export const SignUp = () => {
     resolver: zodResolver(signUpSchema)
   });
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const signUp = api.auth.signUp.useMutation();
 
@@ -36,7 +39,13 @@ export const SignUp = () => {
           reset();
           navigate(ROUTES.DASHBOARD);
         },
-        onError: (e) => alert(e.message)
+        onError: (e) => {
+          toast({
+            title: "Error",
+            description: e.message || "Error signing up.",
+            variant: "destructive"
+          });
+        }
       }
     );
   };
@@ -44,7 +53,11 @@ export const SignUp = () => {
   const googleAuth = () => {
     Meteor.loginWithGoogle({}, (error) => {
       if (error) {
-        alert(`Error: ${error.message}`);
+        toast({
+          title: "Error",
+          description: error.message || "An error occured, please try again later",
+          variant: "destructive"
+        });
       }
       navigate(ROUTES.DASHBOARD);
     });
@@ -57,7 +70,11 @@ export const SignUp = () => {
       },
       (error) => {
         if (error) {
-          alert(`Error: ${error.message}`);
+          toast({
+            title: "Error",
+            description: error.message || "An error occured, please try again later",
+            variant: "destructive"
+          });
         }
         navigate(ROUTES.DASHBOARD);
       }
@@ -139,6 +156,7 @@ export const SignUp = () => {
           </div>
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   );
 };

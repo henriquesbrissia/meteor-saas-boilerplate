@@ -11,6 +11,7 @@ import {
   ChartTooltipContent
 } from "../elements/chart";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
+import { Toaster } from "../elements/toaster";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -60,6 +61,7 @@ export const Dashboard = () => {
             </BarChart>
           </ChartContainer>
         </div>
+        <Toaster />
       </div>
     </SidebarProvider>
   );

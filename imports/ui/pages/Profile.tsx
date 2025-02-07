@@ -14,6 +14,8 @@ import { Button } from "../elements/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../elements/form";
 import { Input } from "../elements/input";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
+import { Toaster } from "../elements/toaster";
+import { useToast } from "../hooks/use-toast";
 
 export const Profile = () => {
   const { data: user } = api.users.loggedUser.useQuery();
@@ -27,9 +29,22 @@ export const Profile = () => {
     resolver: zodResolver(profileSchema)
   });
 
+  const { toast } = useToast();
+
   const updateProfile = api.users.updateProfile.useMutation({
-    onError: (e) => alert(e.message),
-    onSuccess: () => alert("Update successful!")
+    onError: (e) => {
+      toast({
+        title: "Error",
+        description: e.message || "Error updating profile.",
+        variant: "destructive"
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Your profile has been updated successfully!"
+      });
+    }
   });
 
   const handleUpdateProfile = async (data: ProfileValues) => {
@@ -46,9 +61,18 @@ export const Profile = () => {
   };
 
   const deleteAccount = api.users.deleteAccount.useMutation({
-    onError: (e) => alert(e.message),
+    onError: (e) => {
+      toast({
+        title: "Error",
+        description: e.message || "Error deleting account.",
+        variant: "destructive"
+      });
+    },
     onSuccess: () => {
-      alert("Account deleted successfully.");
+      toast({
+        title: "Success",
+        description: "Account deleted successfully."
+      });
       Meteor.logout();
     }
   });
@@ -158,6 +182,7 @@ export const Profile = () => {
             </Button>
           </div>
         </div>
+        <Toaster />
       </div>
     </SidebarProvider>
   );

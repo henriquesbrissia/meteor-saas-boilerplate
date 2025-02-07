@@ -27,6 +27,7 @@ import {
   FormMessage
 } from "../elements/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../elements/select";
+import { useToast } from "../hooks/use-toast";
 
 export const EditRoleDialog = ({ teamId, memberId, memberName, role }: EditRoleDialogProps) => {
   const form = useForm<EditRoleValues>({
@@ -35,12 +36,23 @@ export const EditRoleDialog = ({ teamId, memberId, memberName, role }: EditRoleD
   });
 
   const queryClient = useQueryClient();
+  const { toast } = useToast();
 
   const editRole = api.teams.editRole.useMutation({
-    onError: (error) => console.error("Error editing role:", error),
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Error editing role.",
+        variant: "destructive"
+      });
+    },
     onSuccess: async () => {
       form.reset();
       await queryClient.invalidateQueries();
+      toast({
+        title: "Success",
+        description: "Role edited successfully!"
+      });
     }
   });
 

@@ -10,6 +10,7 @@ import { EditTeamDialog } from "../components/EditTeamDialog";
 import { RemoveMemberDialog } from "../components/RemovememberDialog";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../elements/table";
+import { Toaster } from "../elements/toaster";
 
 export const Teams = () => {
   const userId = Meteor.userId();
@@ -106,6 +107,7 @@ export const Teams = () => {
             <CreateTeamDialog />
           </div>
         </div>
+        <Toaster />
       </div>
     </SidebarProvider>
   );
