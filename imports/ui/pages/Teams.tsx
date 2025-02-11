@@ -34,7 +34,10 @@ export const Teams = () => {
           {teams?.length ? (
             <ul className="space-y-4">
               {teams.map((team) => (
-                <div key={team._id} className="border border-gray-300 p-6 bg-slate-50 shadow-md">
+                <div
+                  key={team._id}
+                  className="border border-gray-300 p-6 bg-slate-50 shadow-md rounded-md"
+                >
                   <h2 className="text-xl font-bold mb-2">
                     {team.name}
                     {team.isAdmin && <EditTeamDialog teamId={team._id} name={team.name} />}
@@ -53,42 +56,43 @@ export const Teams = () => {
                         team.users.map(
                           (user) =>
                             user._id && (
-                          <TableRow key={user._id}>
-                            <TableCell>
-                              {user?.profile?.name ||
-                                user?.services?.github?.name ||
-                                user?.services?.google?.name}
-                            </TableCell>
-                            <TableCell>
-                              {user?.emails?.[0]?.address ||
-                                user?.services?.github?.email ||
-                                user?.services?.google?.email}
-                            </TableCell>
-                            <TableCell>
-                              {user.role || "N/A"}
-                              {user._id !== userId && team.isAdmin && (
-                                <EditRoleDialog
-                                  teamId={team._id}
-                                  memberId={user?._id || ""}
-                                  memberName={user?.profile?.name || "Member"}
-                                  role={user?.role}
-                                />
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              {new Date(user.joinedAt).toLocaleDateString() || "N/A"}
-                            </TableCell>
-                            {user._id !== userId && team.isAdmin && (
-                              <TableCell>
-                                <RemoveMemberDialog
-                                  teamId={team._id}
-                                  memberId={user?._id || ""}
-                                  memberName={user?.profile?.name || "Member"}
-                                />
-                              </TableCell>
-                            )}
-                          </TableRow>
-                        ))
+                              <TableRow key={user._id}>
+                                <TableCell>
+                                  {user?.profile?.name ||
+                                    user?.services?.github?.name ||
+                                    user?.services?.google?.name}
+                                </TableCell>
+                                <TableCell>
+                                  {user?.emails?.[0]?.address ||
+                                    user?.services?.github?.email ||
+                                    user?.services?.google?.email}
+                                </TableCell>
+                                <TableCell>
+                                  {user.role || "N/A"}
+                                  {user._id !== userId && team.isAdmin && (
+                                    <EditRoleDialog
+                                      teamId={team._id}
+                                      memberId={user?._id || ""}
+                                      memberName={user?.profile?.name || "Member"}
+                                      role={user?.role}
+                                    />
+                                  )}
+                                </TableCell>
+                                <TableCell>
+                                  {new Date(user.joinedAt).toLocaleDateString() || "N/A"}
+                                </TableCell>
+                                <TableCell>
+                                  {user._id !== userId && team.isAdmin && (
+                                    <RemoveMemberDialog
+                                      teamId={team._id}
+                                      memberId={user?._id || ""}
+                                      memberName={user?.profile?.name || "Member"}
+                                    />
+                                  )}
+                                </TableCell>
+                              </TableRow>
+                            )
+                        )
                       ) : (
                         <TableRow>
                           <TableCell colSpan={3} className="text-center">

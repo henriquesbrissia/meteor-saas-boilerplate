@@ -42,7 +42,7 @@ export const Dashboard = () => {
         <h1 className="text-2xl font-bold pb-4 pl-14 pt-7 border-b border-gray-300 w-full">
           Your Dashboard <LayoutDashboard className="inline pb-1 ml-1" />
         </h1>
-        <div className="flex-col border border-gray-300 max-w-5xl mx-auto p-6 mt-12 bg-slate-50 shadow-lg">
+        <div className="flex-col border border-gray-300 max-w-5xl mx-auto p-6 mt-12 bg-slate-50 shadow-lg rounded-md">
           <h2 className="text-lg font-semibold">Sales:</h2>
           <ChartContainer config={chartConfig} className="min-h-[200px] w-[900px] m-6">
             <BarChart accessibilityLayer data={chartData}>
