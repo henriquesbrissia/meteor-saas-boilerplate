@@ -50,7 +50,9 @@ export const Teams = () => {
                     </TableHeader>
                     <TableBody>
                       {team.users.length > 0 ? (
-                        team.users.map((user) => (
+                        team.users.map(
+                          (user) =>
+                            user._id && (
                           <TableRow key={user._id}>
                             <TableCell>
                               {user?.profile?.name ||

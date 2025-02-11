@@ -1,6 +1,7 @@
 import { createModule } from "grubba-rpc";
 import { Meteor } from "meteor/meteor";
 
+import { TeamsCollection } from "../teams/collection";
 import { UsersCollection } from "./collection";
 import { deleteSchema, profileSchema, userSchema, usersFindAllSchema } from "./schemas";
 
@@ -39,6 +40,12 @@ export const usersModule = createModule("users")
     if (!userId) {
       throw new Meteor.Error("Not authorized");
     }
+
+    await TeamsCollection.updateAsync(
+      { "members._id": userId },
+      { $pull: { members: { _id: userId } } }
+    );
+
     await UsersCollection.removeAsync(userId);
   })
   .buildSubmodule();
