@@ -79,3 +79,9 @@ export const passwordSchema = z
   });
 
 export type PasswordValues = z.infer<typeof passwordSchema>;
+
+export const userIdSchema = z.object({
+  userId: z.string()
+});
+
+export type UserIdValues = z.infer<typeof userIdSchema>;

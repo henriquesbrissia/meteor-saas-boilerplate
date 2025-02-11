@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserPen } from "lucide-react";
-import { Meteor } from "meteor/meteor";
 import type { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 
@@ -9,6 +8,7 @@ import { profileSchema } from "/imports/api/users/schemas";
 
 import { api } from "../api";
 import { AppSidebar } from "../components/AppSidebar";
+import { DeleteAccount } from "../components/DeleteAccount";
 import { PasswordUpdate } from "../components/PasswordUpdate";
 import { SetTwoFactorAuth } from "../components/SetTwoFactorAuth";
 import { Button } from "../elements/button";
@@ -58,34 +58,6 @@ export const Profile = () => {
       const reader = new FileReader();
       reader.onload = () => form.setValue("image", reader.result as string);
       reader.readAsDataURL(file);
-    }
-  };
-
-  const deleteAccount = api.users.deleteAccount.useMutation({
-    onError: (e) => {
-      toast({
-        title: "Error",
-        description: e.message || "Error deleting account.",
-        variant: "destructive"
-      });
-    },
-    onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Account deleted successfully."
-      });
-      Meteor.logout();
-    }
-  });
-
-  const userId = form.watch("userId");
-
-  const handleDeleteAccount = async () => {
-    const confirmDelete = confirm(
-      "Are you sure you want to delete your account? This action cannot be undone."
-    );
-    if (confirmDelete) {
-      await deleteAccount.mutateAsync(userId);
     }
   };
 
@@ -169,20 +141,7 @@ export const Profile = () => {
           </div>
           {user?.hasPassword && <PasswordUpdate />}
           {user?.hasPassword && <SetTwoFactorAuth />}
-          <div className="p-8 rounded-md shadow-sm">
-            <h1 className="text-2xl font-bold mb-4">Delete Account</h1>
-            <p className="text-sm text-gray-500">Permanently delete your account.</p>
-          </div>
-          <div className="bg-slate-50 p-8 rounded-md shadow-sm">
-            <p className="text-sm text-gray-600">
-              Once your account is deleted, all of its resources and data will be permanently
-              deleted. Before deleting your account, please download any data or information that
-              you wish to retain.
-            </p>
-            <Button variant="destructive" onClick={handleDeleteAccount} className="shadow-md mt-4">
-              Delete Account
-            </Button>
-          </div>
+          {user?._id && <DeleteAccount userId={user._id} />}
         </div>
         <Toaster />
       </div>
