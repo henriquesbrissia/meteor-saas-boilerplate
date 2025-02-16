@@ -7,6 +7,7 @@ import { Random } from "meteor/random";
 import { ServiceConfiguration } from "meteor/service-configuration";
 
 import { authModule } from "/imports/api/auth/methods";
+import { checkoutModule } from "/imports/api/checkout/methods";
 import { TeamsCollection } from "/imports/api/teams/collection";
 import { teamsModule } from "/imports/api/teams/methods";
 import { usersModule } from "/imports/api/users/methods";
@@ -17,6 +18,7 @@ const server = createModule()
   .addSubmodule(usersModule)
   .addSubmodule(authModule)
   .addSubmodule(teamsModule)
+  .addSubmodule(checkoutModule)
   .build();
 export type Server = typeof server;
 
