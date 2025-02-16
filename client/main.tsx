@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { ProtectedRoutes } from "/imports/ui/components/ProtectedRoutes";
+import { CheckoutComplete } from "/imports/ui/pages/CheckoutComplete";
 import { Dashboard } from "/imports/ui/pages/Dashboard";
 import { ForgotPassword } from "/imports/ui/pages/ForgotPassword";
 import { Profile } from "/imports/ui/pages/Profile";
@@ -31,6 +32,7 @@ Meteor.startup(() => {
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />
             <Route path={ROUTES.TEAMS} element={<Teams />} />
+            <Route path={ROUTES.CHECKOUT_COMPLETE} element={<CheckoutComplete />} />
           </Route>
         </Routes>
       </BrowserRouter>
