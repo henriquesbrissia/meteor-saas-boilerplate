@@ -11,6 +11,7 @@ import { Profile } from "/imports/ui/pages/Profile";
 import { ResetPassword } from "/imports/ui/pages/ResetPassword";
 import { SignIn } from "/imports/ui/pages/SignIn";
 import { SignUp } from "/imports/ui/pages/SignUp";
+import { Subscription } from "/imports/ui/pages/Subscription";
 import { Teams } from "/imports/ui/pages/Teams";
 import { ROUTES } from "/imports/ui/utils/routes";
 
@@ -32,6 +33,7 @@ Meteor.startup(() => {
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.PROFILE} element={<Profile />} />
             <Route path={ROUTES.TEAMS} element={<Teams />} />
+            <Route path={ROUTES.SUBSCRIPTION} element={<Subscription />} />
             <Route path={ROUTES.CHECKOUT_COMPLETE} element={<CheckoutComplete />} />
           </Route>
         </Routes>

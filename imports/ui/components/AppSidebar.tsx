@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { LayoutDashboard, LogOut, UserPen, Users } from "lucide-react";
+import { Crown, LayoutDashboard, LogOut, UserPen, Users } from "lucide-react";
 import { Meteor } from "meteor/meteor";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +17,6 @@ import {
 } from "../elements/sidebar";
 import { ROUTES } from "../utils/routes";
 
-// Menu items.
 const items = [
   {
     title: "Dashboard",
@@ -33,6 +32,11 @@ const items = [
     title: "Teams",
     url: ROUTES.TEAMS,
     icon: Users
+  },
+  {
+    title: "Subscription",
+    url: ROUTES.SUBSCRIPTION,
+    icon: Crown
   }
 ];
 
@@ -49,12 +53,12 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
-        <SidebarGroup className="p-5">
+        <SidebarGroup>
           <SidebarGroupLabel>Meteor SaaS Boilerplate</SidebarGroupLabel>
-          <SidebarGroupContent className="font-semibold mt-10">
+          <SidebarGroupContent className="font-semibold mt-12">
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem className="shadow-inner p-2" key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
                       <item.icon />

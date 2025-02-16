@@ -6,5 +6,7 @@ export const ROUTES = {
   HOME: "/",
   DASHBOARD: "/dashboard",
   PROFILE: "/profile",
-  TEAMS: "/teams"
+  TEAMS: "/teams",
+  SUBSCRIPTION: "/subscription",
+  CHECKOUT_COMPLETE: "/checkout-complete"
 };
