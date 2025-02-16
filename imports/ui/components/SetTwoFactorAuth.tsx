@@ -102,7 +102,7 @@ export const SetTwoFactorAuth = () => {
           Enhance the security of your account by enabling two-factor authentication (2FA).
         </p>
       </div>
-      <div className="bg-slate-50 p-8 rounded-md shadow-sm">
+      <div className="bg-white p-8 rounded-md shadow-sm">
         {user?.hasTwoFAEnabled ? (
           <>
             <p className="text-sm text-gray-600">

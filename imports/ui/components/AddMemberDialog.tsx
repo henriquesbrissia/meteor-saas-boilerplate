@@ -32,6 +32,7 @@ export const AddMemberDialog = ({ teamId }: TeamIdValues) => {
 
   const addMember = api.teams.addMember.useMutation({
     onError: (e) => {
+      form.reset();
       toast({
         title: "Error",
         description: e.message || "Error adding member.",

@@ -61,7 +61,7 @@ export const EditTeamDialog = ({ teamId, name }: EditTeamValues) => {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
-          <SquarePen />
+          <SquarePen className="text-gray-500" />
         </Button>
       </DialogTrigger>
       <DialogContent>

@@ -68,7 +68,7 @@ export const EditRoleDialog = ({ teamId, memberId, memberName, role }: EditRoleD
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" className="p-1">
-          <SquarePen className="pt-1" />
+          <SquarePen className="pt-1 text-gray-500" />
         </Button>
       </DialogTrigger>
       <DialogContent>

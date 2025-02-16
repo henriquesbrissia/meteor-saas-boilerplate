@@ -26,19 +26,21 @@ export const Teams = () => {
     <SidebarProvider>
       <AppSidebar />
       <div className="flex-col h-screen w-full">
-        <SidebarTrigger />
-        <h1 className="text-2xl font-bold pb-4 pl-14 pt-7 border-b border-gray-300 w-full">
-          Your Teams <Users className="inline pb-1 ml-1" />
-        </h1>
-        <div className="flex-col max-w-5xl mx-auto p-6">
+        <div className="bg-white shadow-sm">
+          <SidebarTrigger />
+          <h1 className="text-2xl font-bold pb-4 pl-14 pt-7">
+            Your Teams <Users className="inline pb-1 ml-1" />
+          </h1>
+        </div>
+        <div className="flex-col max-w-5xl mx-auto p-8">
           {teams?.length ? (
-            <ul className="space-y-4">
+            <ul className="space-y-8">
               {teams.map((team) => (
                 <div
                   key={team._id}
-                  className="border border-gray-300 p-6 bg-slate-50 shadow-md rounded-md"
+                  className="border border-gray-200 p-6 bg-white shadow-md rounded-xl"
                 >
-                  <h2 className="text-xl font-bold mb-2">
+                  <h2 className="text-xl font-bold mb-3">
                     {team.name}
                     {team.isAdmin && <EditTeamDialog teamId={team._id} name={team.name} />}
                   </h2>
@@ -109,7 +111,7 @@ export const Teams = () => {
           ) : (
             <p className="text-gray-500">You have no teams yet.</p>
           )}
-          <div className="flex justify-end mt-4">
+          <div className="flex justify-center p-8">
             <CreateTeamDialog />
           </div>
         </div>

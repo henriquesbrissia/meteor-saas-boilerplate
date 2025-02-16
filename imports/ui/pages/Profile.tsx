@@ -67,16 +67,18 @@ export const Profile = () => {
     <SidebarProvider>
       <AppSidebar />
       <div className="flex-col h-screen w-full">
-        <SidebarTrigger />
-        <h1 className="text-2xl font-bold pb-4 pl-14 pt-7 border-b border-gray-300 w-full">
-          Your Profile <UserPen className="inline pb-1 ml-1" />
-        </h1>
+        <div className="bg-white shadow-sm">
+          <SidebarTrigger />
+          <h1 className="text-2xl font-bold pb-4 pl-14 pt-7">
+            Your Profile <UserPen className="inline pb-1 ml-1" />
+          </h1>
+        </div>
         <div className="grid gap-6 grid-cols-2 grid-rows-4 max-w-5xl min-w-[800px] mx-auto pt-14">
           <div className="p-8 rounded-md shadow-sm">
             <h1 className="text-2xl font-bold mb-4">Your Account</h1>
             <p className="text-sm text-gray-500">Update your account's name and email address.</p>
           </div>
-          <div className="bg-slate-50 p-8 rounded-md shadow-sm">
+          <div className="bg-white p-8 rounded-md shadow-sm">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(handleUpdateProfile)} className="space-y-6">
                 <div className="flex items-center gap-4">

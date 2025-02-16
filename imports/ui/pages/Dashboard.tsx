@@ -38,11 +38,14 @@ export const Dashboard = () => {
     <SidebarProvider>
       <AppSidebar />
       <div className="flex-col h-screen w-full">
+        <div className="bg-white shadow-sm">
         <SidebarTrigger />
-        <h1 className="text-2xl font-bold pb-4 pl-14 pt-7 border-b border-gray-300 w-full">
+          <h1 className="text-2xl font-bold pb-4 pl-14 pt-7">
           Your Dashboard <LayoutDashboard className="inline pb-1 ml-1" />
         </h1>
-        <div className="flex-col border border-gray-300 max-w-5xl mx-auto p-6 mt-12 bg-slate-50 shadow-lg rounded-md">
+        </div>
+        {isActive ? (
+          <div className="flex-col border border-gray-200 max-w-5xl mx-auto p-6 mt-12 bg-white shadow-md rounded-xl">
           <h2 className="text-lg font-semibold">Sales:</h2>
           <ChartContainer config={chartConfig} className="min-h-[200px] w-[900px] m-6">
             <BarChart accessibilityLayer data={chartData}>

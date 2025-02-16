@@ -48,7 +48,7 @@ export const PasswordUpdate = () => {
           Ensure your account is using a long, random password to stay secure.
         </p>
       </div>
-      <div className="bg-slate-50 p-8 rounded-md shadow-sm">
+      <div className="bg-white p-8 rounded-md shadow-sm">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField

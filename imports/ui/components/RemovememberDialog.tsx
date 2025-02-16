@@ -50,7 +50,7 @@ export const RemoveMemberDialog = ({ teamId, memberId, memberName }: RemoveMembe
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
-          <UserMinus />
+          <UserMinus className="text-red-600" />
         </Button>
       </DialogTrigger>
       <DialogContent>

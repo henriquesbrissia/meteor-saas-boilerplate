@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 
-import type { UserIdValues } from "@/imports/api/users/schemas";
+import type { UserIdValues } from "/imports/api/users/schemas";
 
 import { api } from "../api";
 import {
@@ -47,7 +47,7 @@ export function DeleteAccount({ userId }: UserIdValues) {
         <h1 className="text-2xl font-bold mb-4">Delete Account</h1>
         <p className="text-sm text-gray-500">Permanently delete your account.</p>
       </div>
-      <div className="bg-slate-50 p-8 rounded-md shadow-sm">
+      <div className="bg-white p-8 rounded-md shadow-sm">
         <p className="text-sm text-gray-600">
           Once your account is deleted, all of its resources and data will be permanently deleted.
           Before deleting your account, please download any data or information that you wish to
