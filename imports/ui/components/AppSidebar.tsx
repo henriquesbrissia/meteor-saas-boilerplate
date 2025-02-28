@@ -3,6 +3,7 @@ import { Crown, LayoutDashboard, LogOut, UserPen, Users } from "lucide-react";
 import { Meteor } from "meteor/meteor";
 import { useNavigate } from "react-router-dom";
 
+import { ROUTES } from "../../utils/routes";
 import { Button } from "../elements/button";
 import {
   Sidebar,
@@ -15,7 +16,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from "../elements/sidebar";
-import { ROUTES } from "../utils/routes";
 
 const items = [
   {

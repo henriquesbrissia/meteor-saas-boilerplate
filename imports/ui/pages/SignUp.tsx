@@ -5,15 +5,15 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
 import { type CreateUserValues, signUpSchema } from "/imports/api/auth/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 import { api } from "/imports/ui/api";
-import { ROUTES } from "/imports/ui/utils/routes";
 
+import { ROUTES } from "../../utils/routes";
 import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { Input } from "../elements/input";
 import { Label } from "../elements/label";
 import { Toaster } from "../elements/toaster";
-import { useToast } from "../hooks/use-toast";
 
 export const SignUp = () => {
   const {

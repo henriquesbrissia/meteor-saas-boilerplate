@@ -4,11 +4,11 @@ import { useForm } from "react-hook-form";
 
 import type { PasswordValues } from "/imports/api/users/schemas";
 import { passwordSchema } from "/imports/api/users/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { Button } from "../elements/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../elements/form";
 import { Input } from "../elements/input";
-import { useToast } from "../hooks/use-toast";
 
 export const PasswordUpdate = () => {
   const form = useForm<PasswordValues>({

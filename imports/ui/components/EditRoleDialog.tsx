@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 import type { EditRoleDialogProps, EditRoleValues } from "/imports/api/teams/schemas";
 import { editRoleSchema } from "/imports/api/teams/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import { Button } from "../elements/button";
@@ -27,7 +28,6 @@ import {
   FormMessage
 } from "../elements/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../elements/select";
-import { useToast } from "../hooks/use-toast";
 
 export const EditRoleDialog = ({ teamId, memberId, memberName, role }: EditRoleDialogProps) => {
   const form = useForm<EditRoleValues>({

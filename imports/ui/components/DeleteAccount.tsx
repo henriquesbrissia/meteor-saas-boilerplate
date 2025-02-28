@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 
 import type { UserIdValues } from "/imports/api/users/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import {
@@ -15,7 +16,6 @@ import {
   AlertDialogTrigger
 } from "../elements/alert-dialog";
 import { Button } from "../elements/button";
-import { useToast } from "../hooks/use-toast";
 
 export function DeleteAccount({ userId }: UserIdValues) {
   const { toast } = useToast();

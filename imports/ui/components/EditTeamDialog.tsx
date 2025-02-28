@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 import type { EditTeamValues } from "/imports/api/teams/schemas";
 import { editTeamSchema } from "/imports/api/teams/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import { Button } from "../elements/button";
@@ -20,7 +21,6 @@ import {
 } from "../elements/dialog";
 import { Form } from "../elements/form";
 import { Input } from "../elements/input";
-import { useToast } from "../hooks/use-toast";
 
 export const EditTeamDialog = ({ teamId, name }: EditTeamValues) => {
   const form = useForm<EditTeamValues>({

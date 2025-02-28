@@ -1,5 +1,3 @@
-import "dotenv/config";
-
 import { createModule } from "grubba-rpc";
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
@@ -27,8 +25,8 @@ await ServiceConfiguration.configurations.upsertAsync(
   {
     $set: {
       loginStyle: "popup",
-      clientId: process.env.GOOGLE_OAUTH_CLIENT_ID,
-      secret: process.env.GOOGLE_OAUTH_SECRET
+      clientId: Meteor.settings.GOOGLE_OAUTH_CLIENT_ID as string,
+      secret: Meteor.settings.GOOGLE_OAUTH_SECRET as string
     }
   }
 );
@@ -38,8 +36,8 @@ await ServiceConfiguration.configurations.upsertAsync(
   {
     $set: {
       loginStyle: "popup",
-      clientId: process.env.GITHUB_OAUTH_CLIENT_ID,
-      secret: process.env.GITHUB_OAUTH_SECRET
+      clientId: Meteor.settings.GITHUB_OAUTH_CLIENT_ID as string,
+      secret: Meteor.settings.GITHUB_OAUTH_SECRET as string
     }
   }
 );

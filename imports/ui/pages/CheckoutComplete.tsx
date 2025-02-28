@@ -1,9 +1,9 @@
 import { ShoppingBag } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import { ROUTES } from "../../utils/routes";
 import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
-import { ROUTES } from "../utils/routes";
 
 export const CheckoutComplete = () => {
   const navigate = useNavigate();

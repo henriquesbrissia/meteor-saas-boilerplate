@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { UserMinus } from "lucide-react";
 
 import type { RemoveMemberDialogProps } from "/imports/api/teams/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import { Button } from "../elements/button";
@@ -15,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger
 } from "../elements/dialog";
-import { useToast } from "../hooks/use-toast";
 
 export const RemoveMemberDialog = ({ teamId, memberId, memberName }: RemoveMemberDialogProps) => {
   const queryClient = useQueryClient();

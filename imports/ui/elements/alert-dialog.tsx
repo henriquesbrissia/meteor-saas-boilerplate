@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { buttonVariants } from "/imports/ui/elements/button";
 
-import { cn } from "../utils/cnHelper";
+import { cn } from "../../utils/cnHelper";
 
 const AlertDialog = AlertDialogPrimitive.Root;
 

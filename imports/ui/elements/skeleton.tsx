@@ -1,4 +1,4 @@
-import { cn } from "../utils/cnHelper";
+import { cn } from "../../utils/cnHelper";
 
 function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cn("animate-pulse rounded-md bg-primary/10", className)} {...props} />;

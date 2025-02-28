@@ -1,0 +1,19 @@
+{
+  "BASE_URL": "",
+
+  "GOOGLE_OAUTH_CLIENT_ID": "",
+  "GOOGLE_OAUTH_SECRET": "",
+
+  "GITHUB_OAUTH_CLIENT_ID": "",
+  "GITHUB_OAUTH_SECRET": "",
+
+  "RESEND_API_KEY": "",
+
+  "STRIPE_SECRET_KEY": "",
+  "STRIPE_PRICE_ID": "",
+
+  "public": {
+    "stripePublishableKey": "",
+    "StripeClientPage": ""
+  }
+}

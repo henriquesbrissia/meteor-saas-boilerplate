@@ -13,7 +13,8 @@ import { SignIn } from "/imports/ui/pages/SignIn";
 import { SignUp } from "/imports/ui/pages/SignUp";
 import { Subscription } from "/imports/ui/pages/Subscription";
 import { Teams } from "/imports/ui/pages/Teams";
-import { ROUTES } from "/imports/ui/utils/routes";
+
+import { ROUTES } from "../imports/utils/routes";
 
 const queryClient = new QueryClient();
 

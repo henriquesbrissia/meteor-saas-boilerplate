@@ -3,6 +3,7 @@ import { CreditCard, Crown, XCircle } from "lucide-react";
 import { Meteor } from "meteor/meteor";
 
 import type { CancelSubscriptionValues, SubscriptionDetails } from "/imports/api/checkout/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import { AppSidebar } from "../components/AppSidebar";
@@ -23,7 +24,6 @@ import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Toaster } from "../elements/toaster";
-import { useToast } from "../hooks/use-toast";
 
 export const Subscription = () => {
   const {

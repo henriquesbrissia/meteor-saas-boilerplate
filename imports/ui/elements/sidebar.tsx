@@ -4,6 +4,7 @@ import { cva } from "class-variance-authority";
 import { PanelLeft } from "lucide-react";
 import * as React from "react";
 
+import { useIsMobile } from "/imports/hooks/use-mobile";
 import { Button } from "/imports/ui/elements/button";
 import { Input } from "/imports/ui/elements/input";
 import { Separator } from "/imports/ui/elements/separator";
@@ -15,8 +16,8 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from "/imports/ui/elements/tooltip";
-import { useIsMobile } from "/imports/ui/hooks/use-mobile";
-import { cn } from "/imports/ui/utils/cnHelper";
+
+import { cn } from "../../utils/cnHelper";
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

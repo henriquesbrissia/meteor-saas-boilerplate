@@ -4,15 +4,15 @@ import { Link } from "react-router-dom";
 
 import type { ForgotPasswordValues } from "/imports/api/auth/schemas";
 import { forgotPasswordSchema } from "/imports/api/auth/schemas";
-import { ROUTES } from "/imports/ui/utils/routes";
+import { useToast } from "/imports/hooks/use-toast";
 
+import { ROUTES } from "../../utils/routes";
 import { api } from "../api";
 import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { Input } from "../elements/input";
 import { Label } from "../elements/label";
 import { Toaster } from "../elements/toaster";
-import { useToast } from "../hooks/use-toast";
 
 export const ForgotPassword = () => {
   const form = useForm<ForgotPasswordValues>({

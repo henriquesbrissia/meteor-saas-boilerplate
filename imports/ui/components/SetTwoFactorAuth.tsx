@@ -2,11 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 import { Buffer } from "buffer";
 import { Accounts } from "meteor/accounts-base";
+import type { Meteor } from "meteor/meteor";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import type { TwoFaFormValues } from "/imports/api/auth/schemas";
 import { twofaSchema } from "/imports/api/auth/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import { Button } from "../elements/button";
@@ -20,7 +22,6 @@ import {
   FormMessage
 } from "../elements/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../elements/input-otp";
-import { useToast } from "../hooks/use-toast";
 
 export const SetTwoFactorAuth = () => {
   const [qrCode, setQrCode] = useState<string | null>(null);
@@ -55,7 +56,7 @@ export const SetTwoFactorAuth = () => {
   const queryClient = useQueryClient();
 
   const onSubmit = (data: TwoFaFormValues) => {
-    Accounts.enableUser2fa(data.twofaCode, async (err) => {
+    Accounts.enableUser2fa(data.twofaCode, async (err: Meteor.Error) => {
       if (err) {
         toast({
           title: "Error",
@@ -75,7 +76,7 @@ export const SetTwoFactorAuth = () => {
   };
 
   const disable2fa = () => {
-    Accounts.disableUser2fa(async (err) => {
+    Accounts.disableUser2fa(async (err: Meteor.Error) => {
       if (err) {
         toast({
           title: "Error",

@@ -1,8 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Meteor } from "meteor/meteor";
 import { useForm } from "react-hook-form";
 
 import type { TwoFactorFormProps, TwoFaFormValues } from "/imports/api/auth/schemas";
 import { twofaSchema } from "/imports/api/auth/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { Button } from "../elements/button";
 import {
@@ -15,7 +17,6 @@ import {
   FormMessage
 } from "../elements/form";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../elements/input-otp";
-import { useToast } from "../hooks/use-toast";
 
 export const TwoFactorForm = ({ email, password, onSuccess }: TwoFactorFormProps) => {
   const { toast } = useToast();
@@ -25,7 +26,7 @@ export const TwoFactorForm = ({ email, password, onSuccess }: TwoFactorFormProps
   });
 
   const onSubmit = (data: TwoFaFormValues) => {
-    Meteor.loginWithPasswordAnd2faCode(email, password, data.twofaCode, (error) => {
+    Meteor.loginWithPasswordAnd2faCode(email, password, data.twofaCode, (error: Meteor.Error) => {
       if (error) {
         toast({
           title: "Error",

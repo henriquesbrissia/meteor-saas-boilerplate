@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 
 import type { ProfileValues } from "/imports/api/users/schemas";
 import { profileSchema } from "/imports/api/users/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import { AppSidebar } from "../components/AppSidebar";
@@ -16,7 +17,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../elements/input";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Toaster } from "../elements/toaster";
-import { useToast } from "../hooks/use-toast";
 
 export const Profile = () => {
   const { data: user } = api.users.loggedUser.useQuery();

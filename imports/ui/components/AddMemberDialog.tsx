@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 
 import type { TeamIdValues } from "/imports/api/teams/schemas";
 import { addMemberSchema, type AddMemberValues } from "/imports/api/teams/schemas";
+import { useToast } from "/imports/hooks/use-toast";
 
 import { api } from "../api";
 import { Button } from "../elements/button";
@@ -19,7 +20,6 @@ import {
 } from "../elements/dialog";
 import { Form } from "../elements/form";
 import { Input } from "../elements/input";
-import { useToast } from "../hooks/use-toast";
 
 export const AddMemberDialog = ({ teamId }: TeamIdValues) => {
   const form = useForm<AddMemberValues>({
