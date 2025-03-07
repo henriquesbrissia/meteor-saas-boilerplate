@@ -83,7 +83,7 @@ export const SignUp = () => {
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
-      <Card className="px-8 space-y-4 shadow-lg w-[28rem]">
+      <Card className="px-8 space-y-3 shadow-lg w-[28rem]">
         <CardHeader>
           <CardTitle className="text-3xl mb-3 mt-2 text-center">Sign up</CardTitle>
           <CardDescription className="text-center">
@@ -91,7 +91,7 @@ export const SignUp = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
+          <div className="grid gap-5">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -130,6 +130,7 @@ export const SignUp = () => {
             <Button
               onClick={handleSubmit(onSubmit)}
               type="submit"
+              size="lg"
               disabled={signUp.isPending}
               className="w-full"
             >
@@ -137,14 +138,14 @@ export const SignUp = () => {
             </Button>
             <div className="relative flex items-center">
               <div className="flex-grow border-t border-gray-300"></div>
-              <span className="flex-shrink m-4 text-gray-500 text-xs">or continue with</span>
+              <span className="flex-shrink m-3 text-gray-500 text-xs">or continue with</span>
               <div className="flex-grow border-t border-gray-300"></div>
             </div>
             <div className="flex mb-6 gap-5">
-              <Button onClick={googleAuth} variant="outline" className="w-full">
+              <Button onClick={googleAuth} size="lg" variant="outline" className="w-full">
                 <span className="font-bold text-lg">G</span> Google
               </Button>
-              <Button onClick={githubAuth} variant="outline" className="w-full">
+              <Button onClick={githubAuth} size="lg" variant="outline" className="w-full">
                 <Github /> Github
               </Button>
             </div>

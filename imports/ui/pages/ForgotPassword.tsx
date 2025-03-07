@@ -58,7 +58,7 @@ export const ForgotPassword = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-4">
+          <div className="grid gap-5">
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -73,6 +73,7 @@ export const ForgotPassword = () => {
             <Button
               onClick={form.handleSubmit(handleSendEmail)}
               type="submit"
+              size="lg"
               disabled={form.formState.isSubmitting}
               className="w-full mb-3"
             >

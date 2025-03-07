@@ -77,7 +77,7 @@ export const TwoFactorForm = ({ email, password, onSuccess }: TwoFactorFormProps
           <p className="text-red-500 text-sm">{form.formState.errors.twofaCode.message}</p>
         )}
         <div className="flex justify-end py-4">
-          <Button type="submit" className="w-full">
+          <Button type="submit" size="lg" className="w-full">
             {form.formState.isSubmitting ? "Verifying..." : "Verify"}
           </Button>
         </div>

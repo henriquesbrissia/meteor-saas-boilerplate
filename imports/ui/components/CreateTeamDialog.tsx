@@ -59,7 +59,7 @@ export const CreateTeamDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"outline"} className="w-60 shadow-sm">
+        <Button variant={"outline"} size="lg" className="w-60 shadow-sm">
           Create Team
         </Button>
       </DialogTrigger>

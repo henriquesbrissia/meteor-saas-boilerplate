@@ -60,7 +60,7 @@ export const EditTeamDialog = ({ teamId, name }: EditTeamValues) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="icon">
           <SquarePen className="text-gray-500" />
         </Button>
       </DialogTrigger>

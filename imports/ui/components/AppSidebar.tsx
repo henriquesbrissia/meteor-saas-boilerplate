@@ -72,7 +72,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-5">
-        <Button variant="outline" onClick={handleLogout} className="w-full shadow-sm">
+        <Button variant="outline" size="lg" onClick={handleLogout} className="w-full shadow-sm">
           <LogOut />
           Logout
         </Button>
