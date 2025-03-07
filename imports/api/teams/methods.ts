@@ -1,5 +1,6 @@
 import { createModule } from "grubba-rpc";
 import { Meteor } from "meteor/meteor";
+import Stripe from "stripe";
 
 import { UsersCollection } from "../users/collection";
 import { TeamsCollection } from "./collection";
@@ -8,9 +9,13 @@ import {
   createTeamSchema,
   editRoleSchema,
   editTeamSchema,
+  getOwnerSubscriptionSchema,
   getUserTeamsSchema,
   removeMemberSchema
 } from "./schemas";
+
+const StripeSecretKey = Meteor.settings.STRIPE_SECRET_KEY as string;
+const stripe = new Stripe(StripeSecretKey);
 
 export const teamsModule = createModule("teams")
   .addMethod("createTeam", createTeamSchema, async ({ name }) => {
@@ -38,6 +43,37 @@ export const teamsModule = createModule("teams")
     await TeamsCollection.updateAsync(teamId, {
       $set: { name }
     });
+  })
+  .addMethod("getOwnerSubscriptionStatus", getOwnerSubscriptionSchema, async (ownerId) => {
+    if (!ownerId) {
+      throw new Meteor.Error("Not authorized");
+    }
+
+    const user = await UsersCollection.findOneAsync({ _id: ownerId });
+
+    const email =
+      user?.emails?.[0].address || user?.services?.github?.email || user?.services?.google?.email;
+
+    const customers = await stripe.customers.list({
+      limit: 1,
+      email: email,
+      expand: ["data.subscriptions"]
+    });
+
+    if (customers.data.length === 0) {
+      return null;
+    }
+
+    const customer = customers.data[0];
+    const subscription = customer.subscriptions?.data[0];
+
+    if (!subscription) {
+      return null;
+    }
+
+    const isActive = subscription.status === "active";
+
+    return isActive;
   })
   .addMethod("editRole", editRoleSchema, async ({ teamId, memberId, role }) => {
     const currentUserId = Meteor.userId();

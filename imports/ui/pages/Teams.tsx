@@ -8,6 +8,7 @@ import { CreateTeamDialog } from "../components/CreateTeamDialog";
 import { EditRoleDialog } from "../components/EditRoleDialog";
 import { EditTeamDialog } from "../components/EditTeamDialog";
 import { RemoveMemberDialog } from "../components/RemovememberDialog";
+import { TeamBadge } from "../components/TeamBadge";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../elements/table";
 import { Toaster } from "../elements/toaster";
@@ -40,10 +41,13 @@ export const Teams = () => {
                   key={team._id}
                   className="border border-gray-200 p-6 bg-white shadow-md rounded-xl"
                 >
-                  <h2 className="text-xl font-bold mb-3">
-                    {team.name}
-                    {team.isAdmin && <EditTeamDialog teamId={team._id} name={team.name} />}
-                  </h2>
+                  <div className="text-xl font-bold mb-4 flex justify-between">
+                    <h2 className="flex items-center">
+                      {team.name}
+                      {team.isAdmin && <EditTeamDialog teamId={team._id} name={team.name} />}
+                    </h2>
+                    <TeamBadge ownerId={team.ownerId} />
+                  </div>
                   <Table className="mb-4">
                     <TableHeader>
                       <TableRow>
