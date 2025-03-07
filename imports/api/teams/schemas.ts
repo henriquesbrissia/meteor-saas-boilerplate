@@ -56,6 +56,14 @@ export const editRoleDialog = z.object({
   role: z.enum(["admin", "member"])
 });
 
+export const getOwnerSubscriptionSchema = z.string();
+
+export const getOwnerSubscriptionProps = z.object({
+  ownerId: z.string()
+});
+
+export type GetOwnerSubscriptionValues = z.infer<typeof getOwnerSubscriptionProps>;
+
 export type TeamIdValues = z.infer<typeof teamIdSchema>;
 
 export type AddMemberValues = z.infer<typeof addMemberSchema>;
