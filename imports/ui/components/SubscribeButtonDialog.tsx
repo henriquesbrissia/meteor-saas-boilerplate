@@ -36,7 +36,9 @@ export const SubscribeButtonDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full shadow-md">Subscribe Now</Button>
+        <Button size="lg" className="w-full shadow-md">
+          Subscribe Now
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogTitle></DialogTitle>
