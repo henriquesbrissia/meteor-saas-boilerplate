@@ -44,11 +44,11 @@ export function DeleteAccount({ userId }: UserIdValues) {
   return (
     <>
       <div className="p-8 rounded-md shadow-sm">
-        <h1 className="text-2xl font-bold mb-4">Delete Account</h1>
-        <p className="text-sm text-gray-500">Permanently delete your account.</p>
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">Delete Account</h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Permanently delete your account.</p>
       </div>
-      <div className="bg-white p-8 rounded-md shadow-sm">
-        <p className="text-sm text-gray-600">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-sm">
+        <p className="text-sm text-gray-600 dark:text-gray-300">
           Once your account is deleted, all of its resources and data will be permanently deleted.
           Before deleting your account, please download any data or information that you wish to
           retain.

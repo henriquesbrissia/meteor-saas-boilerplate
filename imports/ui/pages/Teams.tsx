@@ -9,29 +9,35 @@ import { EditRoleDialog } from "../components/EditRoleDialog";
 import { EditTeamDialog } from "../components/EditTeamDialog";
 import { RemoveMemberDialog } from "../components/RemovememberDialog";
 import { TeamBadge } from "../components/TeamBadge";
+import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { SidebarProvider, SidebarTrigger } from "../elements/sidebar";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../elements/table";
 import { Toaster } from "../elements/toaster";
 
 export const Teams = () => {
   const userId = Meteor.userId();
-  if (!userId) return <p>You must be logged in to continue</p>;
+  if (!userId) return <p className="dark:text-white">You must be logged in to continue</p>;
 
   const { data: teams = [], isLoading, error } = api.teams.getUserTeams.useQuery({ _id: userId });
 
-  if (isLoading) return <p>Loading teams...</p>;
+  if (isLoading) return <p className="dark:text-white">Loading teams...</p>;
 
-  if (error) return <p>Error loading teams: {error.message}</p>;
+  if (error) return <p className="dark:text-white">Error loading teams: {error.message}</p>;
 
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="flex-col h-screen w-full">
-        <div className="bg-white shadow-sm">
-          <SidebarTrigger />
-          <h1 className="text-2xl font-bold pb-4 pl-14 pt-7">
-            Your Teams <Users className="inline pb-1 ml-1" />
-          </h1>
+      <div className="flex-col h-screen w-full dark:bg-gray-900 dark:text-white">
+        <div className="bg-white dark:bg-gray-800 shadow-sm flex justify-between items-center">
+          <div className="flex items-center">
+            <SidebarTrigger />
+            <h1 className="text-2xl font-bold pb-4 pl-4 pt-7">
+              Your Teams <Users className="inline pb-1 ml-1" />
+            </h1>
+          </div>
+          <div className="pr-6 pt-2">
+            <ThemeSwitcher />
+          </div>
         </div>
         <div className="flex-col max-w-5xl mx-auto p-8">
           {teams?.length ? (
@@ -39,7 +45,7 @@ export const Teams = () => {
               {teams.map((team) => (
                 <div
                   key={team._id}
-                  className="border border-gray-200 p-6 bg-white shadow-md rounded-xl"
+                  className="border border-gray-200 dark:border-gray-700 p-6 bg-white dark:bg-gray-800 shadow-md rounded-xl"
                 >
                   <div className="text-xl font-bold mb-4 flex justify-between">
                     <h2 className="flex items-center">
@@ -113,7 +119,7 @@ export const Teams = () => {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500">You have no teams yet.</p>
+            <p className="text-gray-500 dark:text-gray-400">You have no teams yet.</p>
           )}
           <div className="flex justify-center p-8">
             <CreateTeamDialog />

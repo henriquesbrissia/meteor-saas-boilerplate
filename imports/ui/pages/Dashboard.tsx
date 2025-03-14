@@ -5,6 +5,7 @@ import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { api } from "../api";
 import { AppSidebar } from "../components/AppSidebar";
 import PricingCard from "../components/PricingCard";
+import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import BannerWarning from "../elements/banner-warning";
 import type { ChartConfig } from "../elements/chart";
 import {
@@ -48,35 +49,41 @@ export const Dashboard = () => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="dark:text-white">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error loading subscription status</div>;
+    return <div className="dark:text-white">Error loading subscription status</div>;
   }
 
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="flex-col h-screen w-full">
-        <div className="bg-white shadow-sm">
-          <SidebarTrigger />
-          <h1 className="text-2xl font-bold pb-4 pl-14 pt-7">
-            Your Dashboard <LayoutDashboard className="inline pb-1 ml-1" />
-          </h1>
+      <div className="flex-col h-screen w-full dark:bg-gray-900 dark:text-white">
+        <div className="bg-white dark:bg-gray-800 shadow-sm flex justify-between items-center">
+          <div className="flex items-center">
+            <SidebarTrigger />
+            <h1 className="text-2xl font-bold pb-4 pl-4 pt-7">
+              Your Dashboard <LayoutDashboard className="inline pb-1 ml-1" />
+            </h1>
+          </div>
+          <div className="pr-6 pt-2">
+            <ThemeSwitcher />
+          </div>
         </div>
         {isActive ? (
-          <div className="flex-col border border-gray-200 max-w-5xl mx-auto p-6 mt-12 bg-white shadow-md rounded-xl">
+          <div className="flex-col border border-gray-200 dark:border-gray-700 max-w-5xl mx-auto p-6 mt-12 bg-white dark:bg-gray-800 shadow-md rounded-xl">
             <h2 className="text-lg font-semibold">Sales:</h2>
             <ChartContainer config={chartConfig} className="min-h-[200px] w-[900px] m-6">
               <BarChart accessibilityLayer data={chartData}>
-                <CartesianGrid vertical={false} />
+                <CartesianGrid vertical={false} className="dark:opacity-20" />
                 <XAxis
                   dataKey="month"
                   tickLine={false}
                   tickMargin={10}
                   axisLine={false}
                   tickFormatter={(value: string) => value.slice(0, 3)}
+                  className="dark:text-gray-300"
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <ChartLegend content={<ChartLegendContent />} />

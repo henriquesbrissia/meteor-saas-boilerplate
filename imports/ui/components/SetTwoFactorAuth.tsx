@@ -99,24 +99,24 @@ export const SetTwoFactorAuth = () => {
     <>
       <div className="p-8 rounded-md shadow-sm">
         <h1 className="text-2xl font-bold mb-4">Two-Factor Authentication</h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Enhance the security of your account by enabling two-factor authentication (2FA).
         </p>
       </div>
-      <div className="bg-white p-8 rounded-md shadow-sm">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-sm">
         {user?.hasTwoFAEnabled ? (
           <>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
               Two-Factor Authentication is currently{" "}
-              <span className="font-bold text-black">Enabled</span> on your account.
+              <span className="font-bold text-black dark:text-white">Enabled</span> on your account.
             </p>
-            <Button onClick={disable2fa} className="shadow-md mt-4">
+            <Button onClick={disable2fa} className="shadow-md mt-4 dark:bg-blue-600 dark:hover:bg-blue-700">
               Disable 2FA
             </Button>
           </>
         ) : status === "pending" ? (
           <div className="justify-items-center text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
               Scan this QR code with your authenticator app (e.g. Google Authenticator), then enter
               the code below to enable 2FA.
             </p>
@@ -125,7 +125,7 @@ export const SetTwoFactorAuth = () => {
                 width={200}
                 src={`data:image/svg+xml;base64,${qrCode}`}
                 alt="2FA QR Code"
-                className="my-4"
+                className="my-4 mx-auto dark:bg-white dark:p-2 dark:rounded"
               />
             )}
             <Form {...form}>
@@ -135,28 +135,28 @@ export const SetTwoFactorAuth = () => {
                   name="twofaCode"
                   render={({ field }) => (
                     <FormItem className="justify-items-center">
-                      <FormLabel>One-Time Password</FormLabel>
+                      <FormLabel className="dark:text-gray-200">One-Time Password</FormLabel>
                       <FormControl>
-                        <InputOTP maxLength={6} {...field}>
+                        <InputOTP maxLength={6} {...field} className="dark:bg-gray-700">
                           <InputOTPGroup>
-                            <InputOTPSlot index={0} />
-                            <InputOTPSlot index={1} />
-                            <InputOTPSlot index={2} />
-                            <InputOTPSlot index={3} />
-                            <InputOTPSlot index={4} />
-                            <InputOTPSlot index={5} />
+                            <InputOTPSlot index={0} className="dark:border-gray-600 dark:text-white" />
+                            <InputOTPSlot index={1} className="dark:border-gray-600 dark:text-white" />
+                            <InputOTPSlot index={2} className="dark:border-gray-600 dark:text-white" />
+                            <InputOTPSlot index={3} className="dark:border-gray-600 dark:text-white" />
+                            <InputOTPSlot index={4} className="dark:border-gray-600 dark:text-white" />
+                            <InputOTPSlot index={5} className="dark:border-gray-600 dark:text-white" />
                           </InputOTPGroup>
                         </InputOTP>
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="dark:text-gray-400">
                         Please enter the one-time password displayed in your authenticator app.
                       </FormDescription>
-                      <FormMessage />
+                      <FormMessage className="dark:text-red-400" />
                     </FormItem>
                   )}
                 />
                 <div className="flex justify-end mt-4">
-                  <Button type="submit" className="w-24">
+                  <Button type="submit" className="w-24 dark:bg-blue-600 dark:hover:bg-blue-700">
                     Submit
                   </Button>
                 </div>
@@ -165,11 +165,11 @@ export const SetTwoFactorAuth = () => {
           </div>
         ) : (
           <>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-300">
               Two-Factor Authentication is currently{" "}
-              <span className="font-bold text-black">Disabled</span> on your account.
+              <span className="font-bold text-black dark:text-white">Disabled</span> on your account.
             </p>
-            <Button onClick={generateQRCode} className="shadow-md mt-4">
+            <Button onClick={generateQRCode} className="shadow-md mt-4 dark:bg-blue-600 dark:hover:bg-blue-700">
               Generate Activation Code
             </Button>
           </>

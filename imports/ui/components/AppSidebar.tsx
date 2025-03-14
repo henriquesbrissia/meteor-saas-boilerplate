@@ -54,13 +54,13 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Meteor SaaS Boilerplate</SidebarGroupLabel>
+          <SidebarGroupLabel className="dark:text-gray-200">Meteor SaaS Boilerplate</SidebarGroupLabel>
           <SidebarGroupContent className="font-semibold mt-12">
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem className="shadow-inner p-2" key={item.title}>
+                <SidebarMenuItem className="shadow-inner p-2 dark:hover:bg-gray-800" key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a href={item.url} className="dark:text-gray-300 dark:hover:text-white">
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
@@ -72,7 +72,12 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="p-5">
-        <Button variant="outline" size="lg" onClick={handleLogout} className="w-full shadow-sm">
+        <Button 
+          variant="outline" 
+          size="lg" 
+          onClick={handleLogout} 
+          className="w-full shadow-sm dark:text-white dark:border-gray-600 dark:hover:bg-gray-800"
+        >
           <LogOut />
           Logout
         </Button>

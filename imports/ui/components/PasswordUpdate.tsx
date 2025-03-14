@@ -43,12 +43,12 @@ export const PasswordUpdate = () => {
   return (
     <>
       <div className="p-8 rounded-md shadow-sm">
-        <h1 className="text-2xl font-bold mb-4">Change password</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">Change password</h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           Ensure your account is using a long, random password to stay secure.
         </p>
       </div>
-      <div className="bg-white p-8 rounded-md shadow-sm">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-md shadow-sm">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
@@ -56,16 +56,17 @@ export const PasswordUpdate = () => {
               name="oldPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Old Password</FormLabel>
+                  <FormLabel className="dark:text-gray-200">Old Password</FormLabel>
                   <FormControl>
                     <Input
                       id="oldPassword"
                       type="password"
                       {...field}
                       {...form.register("oldPassword")}
+                      className="dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -74,16 +75,17 @@ export const PasswordUpdate = () => {
               name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>New Password</FormLabel>
+                  <FormLabel className="dark:text-gray-200">New Password</FormLabel>
                   <FormControl>
                     <Input
                       id="newPassword"
                       type="password"
                       {...field}
                       {...form.register("newPassword")}
+                      className="dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="dark:text-red-400" />
                 </FormItem>
               )}
             />
@@ -92,21 +94,22 @@ export const PasswordUpdate = () => {
               name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
+                  <FormLabel className="dark:text-gray-200">Confirm Password</FormLabel>
                   <FormControl>
                     <Input
                       id="confirmPassword"
                       type="password"
                       {...field}
                       {...form.register("confirmPassword")}
+                      className="dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="dark:text-red-400" />
                 </FormItem>
               )}
             />
             <div className="flex justify-end mt-4">
-              <Button type="submit" className="w-24">
+              <Button type="submit" className="w-24 dark:bg-blue-600 dark:hover:bg-blue-700">
                 {form.formState.isSubmitting ? "Saving..." : "Save"}
               </Button>
             </div>

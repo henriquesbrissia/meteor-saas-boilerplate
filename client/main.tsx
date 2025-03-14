@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { ProtectedRoutes } from "/imports/ui/components/ProtectedRoutes";
+import { ThemeProvider } from "/imports/ui/components/ThemeProvider";
 import { CheckoutComplete } from "/imports/ui/pages/CheckoutComplete";
 import { Dashboard } from "/imports/ui/pages/Dashboard";
 import { ForgotPassword } from "/imports/ui/pages/ForgotPassword";
@@ -23,22 +24,24 @@ Meteor.startup(() => {
   const root = createRoot(container!);
   root.render(
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.SIGN_IN} replace />} />
-          <Route path={ROUTES.SIGN_IN} element={<SignIn />} />
-          <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
-          <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
-          <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
-          <Route element={<ProtectedRoutes />}>
-            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-            <Route path={ROUTES.PROFILE} element={<Profile />} />
-            <Route path={ROUTES.TEAMS} element={<Teams />} />
-            <Route path={ROUTES.SUBSCRIPTION} element={<Subscription />} />
-            <Route path={ROUTES.CHECKOUT_COMPLETE} element={<CheckoutComplete />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.SIGN_IN} replace />} />
+            <Route path={ROUTES.SIGN_IN} element={<SignIn />} />
+            <Route path={ROUTES.SIGN_UP} element={<SignUp />} />
+            <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
+            <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+              <Route path={ROUTES.PROFILE} element={<Profile />} />
+              <Route path={ROUTES.TEAMS} element={<Teams />} />
+              <Route path={ROUTES.SUBSCRIPTION} element={<Subscription />} />
+              <Route path={ROUTES.CHECKOUT_COMPLETE} element={<CheckoutComplete />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 });

@@ -13,11 +13,11 @@ export const ProtectedRoutes = () => {
   });
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="dark:text-white">Loading...</p>;
   }
 
   return user ? (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<p className="dark:text-white">Loading...</p>}>
       <Outlet />
     </Suspense>
   ) : (

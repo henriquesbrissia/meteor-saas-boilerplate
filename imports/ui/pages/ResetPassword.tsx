@@ -12,6 +12,7 @@ import { Button } from "../elements/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../elements/card";
 import { Input } from "../elements/input";
 import { Label } from "../elements/label";
+import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { Toaster } from "../elements/toaster";
 
 export const ResetPassword = () => {
@@ -46,57 +47,64 @@ export const ResetPassword = () => {
   };
 
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <Card className="px-8 space-y-2 shadow-lg w-[28rem]">
-        <CardHeader>
-          <CardTitle className="text-3xl mb-3 mt-2 text-center">Reset Password</CardTitle>
-          <CardDescription className="text-center">Enter your new password.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="newPassword">New Password</Label>
-              <Input
-                type="password"
-                placeholder="Your New Password"
-                required
-                {...form.register("newPassword")}
-                aria-invalid={!!form.formState.errors.newPassword}
-              />
-              {form.formState.errors.newPassword && (
-                <span>{form.formState.errors.newPassword.message}</span>
-              )}
+    <div className="flex-col h-screen w-full dark:bg-gray-900">
+      <div className="flex justify-end p-4">
+        <ThemeSwitcher />
+      </div>
+      <div className="flex h-[calc(100vh-80px)] w-full items-center justify-center">
+        <Card className="px-8 space-y-2 shadow-lg w-[28rem] dark:bg-gray-800 dark:border-gray-700">
+          <CardHeader>
+            <CardTitle className="text-3xl mb-3 mt-2 text-center dark:text-white">Reset Password</CardTitle>
+            <CardDescription className="text-center dark:text-gray-300">Enter your new password.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="newPassword" className="dark:text-gray-200">New Password</Label>
+                <Input
+                  type="password"
+                  placeholder="Your New Password"
+                  required
+                  {...form.register("newPassword")}
+                  aria-invalid={!!form.formState.errors.newPassword}
+                  className="dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                />
+                {form.formState.errors.newPassword && (
+                  <span className="text-red-500 dark:text-red-400">{form.formState.errors.newPassword.message}</span>
+                )}
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="confirmPassword" className="dark:text-gray-200">Confirm Password</Label>
+                <Input
+                  type="password"
+                  placeholder="Confirm your New Password"
+                  required
+                  {...form.register("confirmPassword")}
+                  aria-invalid={!!form.formState.errors.newPassword}
+                  className="dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
+                />
+                {form.formState.errors.confirmPassword && (
+                  <span className="text-red-500 dark:text-red-400">{form.formState.errors.confirmPassword.message}</span>
+                )}
+              </div>
+              <Button
+                onClick={form.handleSubmit(handeResetPassword)}
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                className="w-full mb-3 dark:bg-blue-600 dark:hover:bg-blue-700"
+              >
+                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
             </div>
-            <div className="grid gap-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                type="password"
-                placeholder=" Confirm your New Password"
-                required
-                {...form.register("confirmPassword")}
-                aria-invalid={!!form.formState.errors.newPassword}
-              />
-              {form.formState.errors.confirmPassword && (
-                <span>{form.formState.errors.confirmPassword.message}</span>
-              )}
+            <div className="mt-6 text-left text-sm">
+              <Link to={ROUTES.SIGN_IN} className="underline text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                ⭠ back to sign in page
+              </Link>
             </div>
-            <Button
-              onClick={form.handleSubmit(handeResetPassword)}
-              type="submit"
-              disabled={form.formState.isSubmitting}
-              className="w-full mb-3"
-            >
-              {form.formState.isSubmitting ? "Submitting..." : "Submit"}
-            </Button>
-          </div>
-          <div className="mt-6 text-left text-sm">
-            <Link to={ROUTES.SIGN_IN} className="underline text-gray-500">
-              ⭠ back to sign in page
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-      <Toaster />
+          </CardContent>
+        </Card>
+        <Toaster />
+      </div>
     </div>
   );
 };

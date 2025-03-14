@@ -49,39 +49,42 @@ export const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex h-screen w-full items-center justify-center">
-      <Card className="px-8 space-y-2 shadow-lg w-[28rem]">
+    <div className="flex h-screen w-full items-center justify-center dark:bg-gray-900">
+      <Card className="px-8 space-y-2 shadow-lg w-[28rem] dark:bg-gray-800 dark:border-gray-700">
         <CardHeader>
-          <CardTitle className="text-3xl mb-3 mt-2 text-center">Forgot your password?</CardTitle>
-          <CardDescription className="text-center">
-            Enter your email to recieve a reset link.
+          <CardTitle className="text-3xl mb-3 mt-2 text-center dark:text-white">Forgot your password?</CardTitle>
+          <CardDescription className="text-center dark:text-gray-300">
+            Enter your email to receive a reset link.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-5">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="dark:text-gray-200">Email</Label>
               <Input
                 type="email"
                 placeholder="m@example.com"
                 required
                 {...form.register("email")}
                 aria-invalid={!!form.formState.errors.email}
+                className="dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
               />
-              {form.formState.errors.email && <span>{form.formState.errors.email.message}</span>}
+              {form.formState.errors.email && (
+                <span className="text-red-500 dark:text-red-400">{form.formState.errors.email.message}</span>
+              )}
             </div>
             <Button
               onClick={form.handleSubmit(handleSendEmail)}
               type="submit"
               size="lg"
               disabled={form.formState.isSubmitting}
-              className="w-full mb-3"
+              className="w-full mb-3 dark:bg-blue-600 dark:hover:bg-blue-700"
             >
               {form.formState.isSubmitting ? "Requesting link..." : "Request link"}
             </Button>
           </div>
           <div className="mt-6 text-left text-sm">
-            <Link to={ROUTES.SIGN_IN} className="underline text-gray-500">
+            <Link to={ROUTES.SIGN_IN} className="underline text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
               ⭠ back to sign in page
             </Link>
           </div>
