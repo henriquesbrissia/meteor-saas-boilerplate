@@ -29,16 +29,21 @@ export function DeleteAccount({ userId }: UserIdValues) {
       });
     },
     onSuccess: () => {
-      toast({
-        title: "Success",
-        description: "Account deleted successfully."
+      Meteor.logout(() => {
+        toast({
+          title: "Success",
+          description: "Account deleted successfully."
+        });
       });
-      Meteor.logout();
     }
   });
 
   const handleDeleteAccount = async () => {
-    await deleteAccount.mutateAsync(userId);
+    try {
+      await deleteAccount.mutateAsync(userId);
+    } catch (error) {
+      console.error("Error deleting account:", error);
+    }
   };
 
   return (

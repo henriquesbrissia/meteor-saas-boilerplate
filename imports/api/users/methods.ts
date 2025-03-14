@@ -41,11 +41,24 @@ export const usersModule = createModule("users")
       throw new Meteor.Error("Not authorized");
     }
 
-    await TeamsCollection.updateAsync(
-      { "members._id": userId },
-      { $pull: { members: { _id: userId } } }
-    );
+    try {
+      await TeamsCollection.updateAsync(
+        { "members._id": userId },
+        { $pull: { members: { _id: userId } } }
+      );
 
-    await UsersCollection.removeAsync(userId);
+      const userIdToDelete = userId;
+      
+      setTimeout(() => {
+        UsersCollection.removeAsync(userIdToDelete).catch(e => 
+          console.error("Error deleting user:", e)
+        );
+      }, 300);
+      
+      return true;
+    } catch (error) {
+      console.error("Error during account deletion:", error);
+      throw new Meteor.Error("Error deleting account. Please try again.");
+    }
   })
   .buildSubmodule();
