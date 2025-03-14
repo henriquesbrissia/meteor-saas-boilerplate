@@ -9,6 +9,7 @@ import { checkoutModule } from "/imports/api/checkout/methods";
 import { TeamsCollection } from "/imports/api/teams/collection";
 import { teamsModule } from "/imports/api/teams/methods";
 import { usersModule } from "/imports/api/users/methods";
+import { User, UserOptionsSchema, UserSchema } from "./schemas";
 
 Meteor.startup(async () => {});
 
@@ -42,56 +43,37 @@ await ServiceConfiguration.configurations.upsertAsync(
   }
 );
 
-interface GoogleService {
-  email: string;
-  name?: string;
-}
-
-interface GithubService {
-  email: string;
-  name?: string;
-  username?: string;
-}
-
-interface UserServices {
-  password?: {
-    bcrypt: string;
-  };
-  google?: GoogleService;
-  github?: GithubService;
-}
-
-interface UserProfile {
-  name?: string;
-}
-
-interface UserOptions {
-  email?: string;
-  profile?: UserProfile;
-}
-
-interface User {
-  _id?: string;
-  services?: UserServices;
-  emails?: Array<{ address: string; verified: boolean }>;
-  teams?: string[];
-}
-
-Accounts.onCreateUser(async (options: UserOptions, user: User): Promise<User> => {
-  user._id = Random.id();
+Accounts.onCreateUser(async (options, user): Promise<User> => {
+  const optionsResult = UserOptionsSchema.safeParse(options);
+  const userResult = UserSchema.safeParse(user);
+  
+  if (!optionsResult.success) {
+    console.error("Invalid user options:", optionsResult.error);
+    throw new Meteor.Error("validation-error", "Dados de opções de usuário inválidos");
+  }
+  
+  if (!userResult.success) {
+    console.error("Invalid user data:", userResult.error);
+    throw new Meteor.Error("validation-error", "Dados de usuário inválidos");
+  }
+  
+  const validOptions = optionsResult.data;
+  const validUser = userResult.data;
+  
+  validUser._id = Random.id();
   let email: string | undefined;
   let name: string;
 
-  if (user.services?.password) {
-    email = options.email;
-    name = options.profile?.name ?? email?.split("@")[0] ?? "User";
-  } else if (user.services?.google) {
-    email = user.services.google.email;
-    name = user.services.google.name ?? email?.split("@")[0] ?? "User";
-  } else if (user.services?.github) {
-    email = user.services.github.email;
+  if (validUser.services?.password) {
+    email = validOptions.email;
+    name = validOptions.profile?.name ?? email?.split("@")[0] ?? "User";
+  } else if (validUser.services?.google) {
+    email = validUser.services.google.email;
+    name = validUser.services.google.name ?? email?.split("@")[0] ?? "User";
+  } else if (validUser.services?.github) {
+    email = validUser.services.github.email;
     name =
-      user.services.github.name ?? user.services.github.username ?? email?.split("@")[0] ?? "User";
+      validUser.services.github.name ?? validUser.services.github.username ?? email?.split("@")[0] ?? "User";
   } else {
     throw new Error("Unsupported authentication service");
   }
@@ -99,15 +81,15 @@ Accounts.onCreateUser(async (options: UserOptions, user: User): Promise<User> =>
   try {
     const teamId = await TeamsCollection.insertAsync({
       name: `${name}'s Team`,
-      ownerId: user._id,
-      members: [{ _id: user._id, role: "admin", joinedAt: new Date() }],
+      ownerId: validUser._id,
+      members: [{ _id: validUser._id, role: "admin", joinedAt: new Date() }],
       createdAt: new Date()
     });
 
-    user.teams = [teamId];
+    validUser.teams = [teamId];
   } catch (error) {
     console.error("Error creating team:", error);
   }
 
-  return user;
+  return validUser;
 });
